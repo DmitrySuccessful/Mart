@@ -1,55 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake 3D</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
-        canvas {
-            display: block;
-        }
-        #scoreContainer {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            z-index: 100;
-        }
-        #gameControls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 16px;
-            text-align: center;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            z-index: 100;
-        }
-    </style>
+    <title>Idle Game - Mart</title>
+    <link rel="stylesheet" href="src/css/style.css">
 </head>
 <body>
-    <!-- Score display -->
-    <div id="scoreContainer">
-        Score: <span id="score">0</span>
+    <div class="game-container">
+        <h1 class="game-title">Магазин заказов</h1>
+        
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-label">Деньги</div>
+                <div class="stat-value" id="moneyDisplay">0</div>
+            </div>
+            
+            <div class="stat-box">
+                <div class="stat-label">Обработано заказов</div>
+                <div class="stat-value" id="orderCountDisplay">0</div>
+            </div>
+        </div>
+        
+        <div class="actions-container">
+            <button id="processOrderBtn">Обработать заказ</button>
+        </div>
     </div>
-    
-    <!-- Game controls info -->
-    <div id="gameControls">
-        Use Arrow Keys or WASD to control the snake
-    </div>
-    
-    <!-- Import Three.js from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-    <!-- Import our game script -->
-    <script src="src/js/snake3d.js"></script>
+
+    <!-- Подключение JavaScript -->
+    <script src="src/js/game.js"></script>
 </body>
 </html> 
