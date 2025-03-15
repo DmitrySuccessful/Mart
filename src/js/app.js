@@ -186,6 +186,260 @@ const courses = {
                 </div>`
             }}
         ]
+    },
+    5: {
+        id: 5,
+        title: "Финансовая грамотность для всех",
+        description: "Научитесь управлять личными финансами, инвестировать и планировать бюджет",
+        lessons: [
+            { id: 1, title: "Основы личных финансов", duration: "20 мин", completed: false, locked: false, content: {
+                type: "text",
+                text: `<h3>Основы личных финансов</h3>
+                <p>Финансовая грамотность — это набор знаний и навыков, которые помогают принимать обоснованные решения по управлению личными финансами.</p>
+                
+                <div class="infographic">
+                    <h4>Ключевые компоненты личных финансов</h4>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">💰</div>
+                        <div class="infographic-content">
+                            <h5>Доходы</h5>
+                            <p>Зарплата, подработки, пассивный доход, инвестиции</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">📊</div>
+                        <div class="infographic-content">
+                            <h5>Расходы</h5>
+                            <p>Необходимые (жильё, еда), желательные (развлечения), сбережения</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">🏦</div>
+                        <div class="infographic-content">
+                            <h5>Сбережения</h5>
+                            <p>Финансовая подушка безопасности, накопления на цели</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">📈</div>
+                        <div class="infographic-content">
+                            <h5>Инвестиции</h5>
+                            <p>Приумножение капитала, защита от инфляции</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Первый шаг к финансовой грамотности — это понимание своего текущего финансового положения и создание бюджета.</p>
+                
+                <div class="video-container">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/HQzoZfc3GwQ" frameborder="0" allowfullscreen></iframe>
+                </div>
+                
+                <div class="interactive-element">
+                    <h4>Практическое упражнение: Создание простого бюджета</h4>
+                    <p>Попробуйте составить свой месячный бюджет, используя приведенный ниже калькулятор:</p>
+                    
+                    <div class="budget-calculator">
+                        <div class="calculator-section">
+                            <h5>Доходы</h5>
+                            <div class="calculator-row">
+                                <label for="income-salary">Зарплата:</label>
+                                <input type="number" id="income-salary" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row">
+                                <label for="income-additional">Дополнительный доход:</label>
+                                <input type="number" id="income-additional" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row total">
+                                <label>Всего доходов:</label>
+                                <span id="total-income">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-section">
+                            <h5>Расходы</h5>
+                            <div class="calculator-row">
+                                <label for="expense-housing">Жильё:</label>
+                                <input type="number" id="expense-housing" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row">
+                                <label for="expense-food">Питание:</label>
+                                <input type="number" id="expense-food" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row">
+                                <label for="expense-transport">Транспорт:</label>
+                                <input type="number" id="expense-transport" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row">
+                                <label for="expense-entertainment">Развлечения:</label>
+                                <input type="number" id="expense-entertainment" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row">
+                                <label for="expense-other">Прочее:</label>
+                                <input type="number" id="expense-other" placeholder="0" min="0">
+                            </div>
+                            <div class="calculator-row total">
+                                <label>Всего расходов:</label>
+                                <span id="total-expenses">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="calculator-result">
+                            <div class="calculator-row balance">
+                                <label>Баланс:</label>
+                                <span id="balance">0</span>
+                            </div>
+                        </div>
+                        
+                        <button class="tg-button" onclick="calculateBudget()">Рассчитать</button>
+                    </div>
+                    
+                    <div id="budget-feedback" class="budget-feedback"></div>
+                </div>
+                
+                <div class="key-takeaways">
+                    <h4>Ключевые выводы</h4>
+                    <ul>
+                        <li>Ведение бюджета помогает контролировать расходы и увеличивать сбережения</li>
+                        <li>Финансовая подушка безопасности должна покрывать 3-6 месяцев расходов</li>
+                        <li>Правило 50/30/20: 50% на необходимые расходы, 30% на желания, 20% на сбережения</li>
+                        <li>Регулярный анализ расходов помогает выявить возможности для экономии</li>
+                    </ul>
+                </div>`
+            }},
+            { id: 2, title: "Планирование бюджета", duration: "25 мин", completed: false, locked: false, content: {
+                type: "text",
+                text: `<h3>Планирование бюджета</h3>
+                <p>Планирование бюджета — это процесс создания плана для ваших доходов и расходов. Это основа финансового благополучия, которая помогает достигать финансовых целей и избегать долгов.</p>
+                
+                <div class="infographic">
+                    <h4>Этапы планирования бюджета</h4>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">1️⃣</div>
+                        <div class="infographic-content">
+                            <h5>Определение доходов</h5>
+                            <p>Учитывайте все источники дохода: зарплата, подработки, инвестиции, аренда и т.д.</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">2️⃣</div>
+                        <div class="infographic-content">
+                            <h5>Отслеживание расходов</h5>
+                            <p>Записывайте все расходы и категоризируйте их (необходимые, желательные, инвестиции)</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">3️⃣</div>
+                        <div class="infographic-content">
+                            <h5>Установка целей</h5>
+                            <p>Определите краткосрочные и долгосрочные финансовые цели</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">4️⃣</div>
+                        <div class="infographic-content">
+                            <h5>Создание плана</h5>
+                            <p>Распределите доходы по категориям расходов и сбережений</p>
+                        </div>
+                    </div>
+                    <div class="infographic-item">
+                        <div class="infographic-icon">5️⃣</div>
+                        <div class="infographic-content">
+                            <h5>Регулярный пересмотр</h5>
+                            <p>Анализируйте и корректируйте бюджет ежемесячно</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-container">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/sVKQn2I4HDM" frameborder="0" allowfullscreen></iframe>
+                </div>
+                
+                <h4>Методы планирования бюджета</h4>
+                <p>Существует несколько популярных методов планирования бюджета:</p>
+                
+                <div class="budget-methods">
+                    <div class="budget-method">
+                        <h5>Метод 50/30/20</h5>
+                        <p>Распределение дохода:</p>
+                        <ul>
+                            <li><strong>50%</strong> на необходимые расходы (жильё, еда, транспорт)</li>
+                            <li><strong>30%</strong> на желания (развлечения, рестораны, хобби)</li>
+                            <li><strong>20%</strong> на сбережения и инвестиции</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="budget-method">
+                        <h5>Система конвертов</h5>
+                        <p>Распределение наличных денег по конвертам для разных категорий расходов. Когда конверт пуст, расходы в этой категории прекращаются до следующего месяца.</p>
+                    </div>
+                    
+                    <div class="budget-method">
+                        <h5>Метод "Заплати сначала себе"</h5>
+                        <p>Сначала откладывайте определённый процент дохода на сбережения и инвестиции, а затем планируйте расходы из оставшейся суммы.</p>
+                    </div>
+                </div>
+                
+                <div class="interactive-element">
+                    <h4>Интерактивный калькулятор инвестиций</h4>
+                    <p>Рассчитайте, как ваши инвестиции могут вырасти со временем:</p>
+                    
+                    <div class="investment-calculator">
+                        <div class="calculator-row">
+                            <label for="initial-investment">Начальная сумма (₽):</label>
+                            <input type="number" id="initial-investment" placeholder="10000" min="0">
+                        </div>
+                        <div class="calculator-row">
+                            <label for="monthly-contribution">Ежемесячное пополнение (₽):</label>
+                            <input type="number" id="monthly-contribution" placeholder="1000" min="0">
+                        </div>
+                        <div class="calculator-row">
+                            <label for="annual-return">Годовая доходность (%):</label>
+                            <input type="number" id="annual-return" placeholder="7" min="0" max="100">
+                        </div>
+                        <div class="calculator-row">
+                            <label for="investment-period">Срок инвестирования (лет):</label>
+                            <input type="number" id="investment-period" placeholder="10" min="1" max="50">
+                        </div>
+                        
+                        <button class="tg-button" onclick="calculateInvestment()">Рассчитать</button>
+                        
+                        <div class="investment-result" id="investment-result" style="display: none;">
+                            <h5>Результаты расчета:</h5>
+                            <div class="result-row">
+                                <span>Вложенная сумма:</span>
+                                <span id="total-contributions">0 ₽</span>
+                            </div>
+                            <div class="result-row">
+                                <span>Прибыль от инвестиций:</span>
+                                <span id="total-interest">0 ₽</span>
+                            </div>
+                            <div class="result-row total">
+                                <span>Итоговая сумма:</span>
+                                <span id="final-amount">0 ₽</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="key-takeaways">
+                    <h4>Ключевые выводы</h4>
+                    <ul>
+                        <li>Регулярное планирование бюджета помогает контролировать финансы и достигать целей</li>
+                        <li>Выберите метод планирования, который подходит именно вам</li>
+                        <li>Инвестирование даже небольших сумм может привести к значительному росту капитала</li>
+                        <li>Автоматизируйте сбережения и инвестиции для формирования полезной привычки</li>
+                    </ul>
+                </div>`
+            }},
+            { id: 3, title: "Управление долгами и кредитами", duration: "30 мин", completed: false, locked: true },
+            { id: 4, title: "Основы инвестирования", duration: "35 мин", completed: false, locked: true },
+            { id: 5, title: "Фондовый рынок для начинающих", duration: "30 мин", completed: false, locked: true },
+            { id: 6, title: "Пенсионное планирование", duration: "25 мин", completed: false, locked: true },
+            { id: 7, title: "Страхование и управление рисками", duration: "20 мин", completed: false, locked: true },
+            { id: 8, title: "Налоговая оптимизация", duration: "25 мин", completed: false, locked: true },
+            { id: 9, title: "Финансовые цели и их достижение", duration: "20 мин", completed: false, locked: true }
+        ]
     }
 };
 
@@ -375,6 +629,132 @@ const tests = {
                     "Клиент сравнивает с конкурентами"
                 ],
                 correctAnswer: 0
+            }
+        ]
+    },
+    5: {
+        id: 5,
+        title: "Тест по основам личных финансов",
+        courseId: 5,
+        lessonId: 1,
+        questions: [
+            {
+                id: 1,
+                text: "Что такое финансовая подушка безопасности?",
+                options: [
+                    "Инвестиции в ценные бумаги",
+                    "Накопления для покрытия непредвиденных расходов",
+                    "Страховой полис",
+                    "Пенсионные накопления"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 2,
+                text: "Какое оптимальное соотношение расходов по правилу 50/30/20?",
+                options: [
+                    "50% на развлечения, 30% на необходимые расходы, 20% на сбережения",
+                    "50% на необходимые расходы, 30% на желания, 20% на сбережения",
+                    "50% на сбережения, 30% на необходимые расходы, 20% на желания",
+                    "50% на необходимые расходы, 30% на сбережения, 20% на желания"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 3,
+                text: "Какой размер финансовой подушки безопасности рекомендуется экспертами?",
+                options: [
+                    "1 месяц расходов",
+                    "3-6 месяцев расходов",
+                    "12 месяцев расходов",
+                    "2 года расходов"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 4,
+                text: "Что из перечисленного НЕ относится к доходам?",
+                options: [
+                    "Зарплата",
+                    "Дивиденды от акций",
+                    "Выплаты по кредиту",
+                    "Доход от сдачи недвижимости в аренду"
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 5,
+                text: "Какой первый шаг к финансовой грамотности?",
+                options: [
+                    "Открытие брокерского счета",
+                    "Оформление кредитной карты",
+                    "Понимание своего финансового положения и создание бюджета",
+                    "Покупка страхового полиса"
+                ],
+                correctAnswer: 2
+            }
+        ]
+    },
+    6: {
+        id: 6,
+        title: "Тест по планированию бюджета",
+        courseId: 5,
+        lessonId: 2,
+        questions: [
+            {
+                id: 1,
+                text: "Какое распределение дохода предлагает метод 50/30/20?",
+                options: [
+                    "50% на желания, 30% на необходимые расходы, 20% на сбережения",
+                    "50% на необходимые расходы, 30% на желания, 20% на сбережения",
+                    "50% на сбережения, 30% на необходимые расходы, 20% на желания",
+                    "50% на необходимые расходы, 30% на сбережения, 20% на желания"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 2,
+                text: "В чем суть метода 'Заплати сначала себе'?",
+                options: [
+                    "Сначала оплатить все счета, потом планировать расходы",
+                    "Сначала отложить деньги на сбережения, потом планировать расходы",
+                    "Сначала потратить на развлечения, потом на необходимые расходы",
+                    "Сначала инвестировать весь доход, потом жить на проценты"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 3,
+                text: "Что такое система конвертов в планировании бюджета?",
+                options: [
+                    "Распределение наличных по конвертам для разных категорий расходов",
+                    "Отправка денег в конвертах родственникам",
+                    "Система электронных переводов между счетами",
+                    "Метод учета расходов в таблице Excel"
+                ],
+                correctAnswer: 0
+            },
+            {
+                id: 4,
+                text: "Какой этап планирования бюджета следует за определением доходов?",
+                options: [
+                    "Установка финансовых целей",
+                    "Создание плана расходов",
+                    "Отслеживание расходов",
+                    "Регулярный пересмотр бюджета"
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 5,
+                text: "Как часто рекомендуется пересматривать бюджет?",
+                options: [
+                    "Ежедневно",
+                    "Еженедельно",
+                    "Ежемесячно",
+                    "Ежегодно"
+                ],
+                correctAnswer: 2
             }
         ]
     }
@@ -1448,6 +1828,66 @@ function handleRolePlay(scenario, option) {
     }
 }
 
+// Функция для расчета бюджета
+function calculateBudget() {
+    // Получаем значения доходов
+    const salary = parseFloat(document.getElementById('income-salary').value) || 0;
+    const additionalIncome = parseFloat(document.getElementById('income-additional').value) || 0;
+    
+    // Получаем значения расходов
+    const housing = parseFloat(document.getElementById('expense-housing').value) || 0;
+    const food = parseFloat(document.getElementById('expense-food').value) || 0;
+    const transport = parseFloat(document.getElementById('expense-transport').value) || 0;
+    const entertainment = parseFloat(document.getElementById('expense-entertainment').value) || 0;
+    const other = parseFloat(document.getElementById('expense-other').value) || 0;
+    
+    // Рассчитываем итоги
+    const totalIncome = salary + additionalIncome;
+    const totalExpenses = housing + food + transport + entertainment + other;
+    const balance = totalIncome - totalExpenses;
+    
+    // Обновляем отображение
+    document.getElementById('total-income').textContent = totalIncome;
+    document.getElementById('total-expenses').textContent = totalExpenses;
+    document.getElementById('balance').textContent = balance;
+    
+    // Добавляем класс для стилизации баланса
+    const balanceElement = document.getElementById('balance');
+    if (balance > 0) {
+        balanceElement.className = 'positive';
+    } else if (balance < 0) {
+        balanceElement.className = 'negative';
+    } else {
+        balanceElement.className = '';
+    }
+    
+    // Показываем обратную связь
+    const feedbackElement = document.getElementById('budget-feedback');
+    
+    if (balance < 0) {
+        feedbackElement.innerHTML = '<span class="warning">⚠️ Внимание!</span> Ваши расходы превышают доходы. Рекомендуется пересмотреть бюджет и найти способы сократить расходы или увеличить доходы.';
+        feedbackElement.className = 'budget-feedback warning-feedback';
+    } else if (balance === 0) {
+        feedbackElement.innerHTML = '<span class="neutral">ℹ️ Обратите внимание</span> Ваш бюджет сбалансирован, но не остается средств для сбережений. Рекомендуется выделить хотя бы 10-20% дохода на сбережения.';
+        feedbackElement.className = 'budget-feedback neutral-feedback';
+    } else {
+        const savingsRate = (balance / totalIncome) * 100;
+        
+        if (savingsRate < 10) {
+            feedbackElement.innerHTML = '<span class="info">ℹ️ Хороший старт</span> У вас положительный баланс, но рекомендуется увеличить норму сбережений до 10-20% от дохода.';
+            feedbackElement.className = 'budget-feedback info-feedback';
+        } else if (savingsRate < 20) {
+            feedbackElement.innerHTML = '<span class="success">✓ Отлично!</span> Вы сберегаете более 10% своего дохода. Это хороший показатель финансовой дисциплины.';
+            feedbackElement.className = 'budget-feedback success-feedback';
+        } else {
+            feedbackElement.innerHTML = '<span class="success">✓ Превосходно!</span> Вы сберегаете более 20% своего дохода. Вы на пути к финансовой независимости!';
+            feedbackElement.className = 'budget-feedback success-feedback';
+        }
+    }
+    
+    feedbackElement.style.display = 'block';
+}
+
 // Функция для инициализации FAQ-вопросов
 function initFaqItems() {
     const faqQuestions = document.querySelectorAll('.faq-question');
@@ -1480,4 +1920,38 @@ function initFaqItems() {
             }
         });
     });
+}
+
+// Функция для расчета инвестиций
+function calculateInvestment() {
+    // Получаем значения из полей ввода
+    const initialInvestment = parseFloat(document.getElementById('initial-investment').value) || 10000;
+    const monthlyContribution = parseFloat(document.getElementById('monthly-contribution').value) || 1000;
+    const annualReturn = parseFloat(document.getElementById('annual-return').value) || 7;
+    const years = parseFloat(document.getElementById('investment-period').value) || 10;
+    
+    // Расчет
+    const monthlyRate = annualReturn / 100 / 12;
+    const totalMonths = years * 12;
+    
+    let futureValue = initialInvestment;
+    for (let i = 0; i < totalMonths; i++) {
+        futureValue = (futureValue + monthlyContribution) * (1 + monthlyRate);
+    }
+    
+    const totalContributions = initialInvestment + (monthlyContribution * totalMonths);
+    const totalInterest = futureValue - totalContributions;
+    
+    // Форматирование чисел
+    const formatNumber = (num) => {
+        return Math.round(num).toLocaleString('ru-RU') + ' ₽';
+    };
+    
+    // Обновляем результаты
+    document.getElementById('total-contributions').textContent = formatNumber(totalContributions);
+    document.getElementById('total-interest').textContent = formatNumber(totalInterest);
+    document.getElementById('final-amount').textContent = formatNumber(futureValue);
+    
+    // Показываем результаты
+    document.getElementById('investment-result').style.display = 'block';
 } 
