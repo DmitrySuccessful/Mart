@@ -5,12 +5,19 @@ let currentOrder = null;
 let orderTimer = null;
 let orderTimeout = 5000; // 5 секунд на обработку заказа
 
+// Переменные для системы апгрейдов
+let upgradeLevel = 1;
+let baseUpgradeCost = 100; // Базовая стоимость апгрейда
+
 // Инициализация игры
 function initGame() {
     updateDisplay();
     
     // Добавляем обработчик события для кнопки "Обработать заказ"
     document.getElementById('processOrderBtn').addEventListener('click', processOrder);
+    
+    // Добавляем обработчик события для кнопки "Апгрейд склада"
+    document.getElementById('upgradeBtn').addEventListener('click', upgradeWarehouse);
     
     // Запускаем систему генерации заказов
     startOrderGeneration();
@@ -36,7 +43,10 @@ function startOrderGeneration() {
 // Функция генерации нового заказа
 function generateNewOrder() {
     // Генерируем случайную стоимость заказа от 5 до 20
-    const orderValue = Math.floor(Math.random() * 16) + 5;
+    const baseOrderValue = Math.floor(Math.random() * 16) + 5;
+    
+    // Применяем множитель в зависимости от уровня склада
+    const orderValue = Math.floor(baseOrderValue * getIncomeMultiplier());
     
     // Создаем новый заказ
     currentOrder = {
@@ -52,6 +62,68 @@ function generateNewOrder() {
     
     // Запускаем таймер для этого заказа
     startOrderTimer();
+}
+
+// Функция получения множителя дохода в зависимости от уровня склада
+function getIncomeMultiplier() {
+    // Базовый множитель 1.0 + 0.2 за каждый уровень выше первого
+    return 1.0 + (upgradeLevel - 1) * 0.2;
+}
+
+// Функция получения стоимости следующего апгрейда
+function getUpgradeCost() {
+    return baseUpgradeCost * upgradeLevel;
+}
+
+// Функция апгрейда склада
+function upgradeWarehouse() {
+    const upgradeCost = getUpgradeCost();
+    
+    // Проверяем, достаточно ли денег
+    if (money >= upgradeCost) {
+        // Вычитаем стоимость апгрейда
+        money -= upgradeCost;
+        
+        // Увеличиваем уровень склада
+        upgradeLevel++;
+        
+        // Показываем анимацию апгрейда
+        showUpgradeAnimation();
+        
+        // Обновляем интерфейс
+        updateDisplay();
+        updateUpgradeInfo();
+    } else {
+        // Показываем сообщение о недостатке денег
+        showNotEnoughMoneyMessage();
+    }
+}
+
+// Функция отображения анимации апгрейда
+function showUpgradeAnimation() {
+    // Создаем элемент для анимации
+    const animationElement = document.createElement('div');
+    animationElement.className = 'upgrade-animation';
+    animationElement.textContent = `Уровень ${upgradeLevel}!`;
+    
+    // Добавляем элемент в DOM
+    document.querySelector('.game-container').appendChild(animationElement);
+    
+    // Удаляем элемент после завершения анимации
+    setTimeout(function() {
+        animationElement.remove();
+    }, 2000);
+}
+
+// Функция отображения сообщения о недостатке денег
+function showNotEnoughMoneyMessage() {
+    const messageElement = document.getElementById('orderMessage');
+    messageElement.textContent = 'Недостаточно денег для апгрейда!';
+    messageElement.classList.add('message-active');
+    
+    setTimeout(function() {
+        messageElement.classList.remove('message-active');
+    }, 2000);
 }
 
 // Функция отображения уведомления о новом заказе
@@ -198,10 +270,23 @@ function updateOrderDisplay() {
     }
 }
 
+// Функция обновления информации об апгрейде
+function updateUpgradeInfo() {
+    // Обновляем отображение уровня склада
+    document.getElementById('upgradeLevel').textContent = upgradeLevel;
+    
+    // Обновляем отображение стоимости следующего апгрейда
+    document.getElementById('upgradeCost').textContent = getUpgradeCost();
+    
+    // Обновляем отображение множителя дохода
+    document.getElementById('incomeMultiplier').textContent = getIncomeMultiplier().toFixed(1);
+}
+
 // Функция обновления отображения
 function updateDisplay() {
     document.getElementById('moneyDisplay').textContent = money;
     document.getElementById('orderCountDisplay').textContent = orderCount;
+    updateUpgradeInfo();
 }
 
 // Запускаем игру после загрузки страницы

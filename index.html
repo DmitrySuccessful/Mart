@@ -34,8 +34,28 @@
             </div>
         </div>
         
+        <!-- Контейнер для информации об апгрейдах -->
+        <div class="upgrade-container">
+            <div class="upgrade-title">Склад и логистика</div>
+            <div class="upgrade-info">
+                <div class="upgrade-stat">
+                    <div class="upgrade-label">Уровень</div>
+                    <div class="upgrade-value" id="upgradeLevel">1</div>
+                </div>
+                <div class="upgrade-stat">
+                    <div class="upgrade-label">Множитель дохода</div>
+                    <div class="upgrade-value">x<span id="incomeMultiplier">1.0</span></div>
+                </div>
+                <div class="upgrade-stat">
+                    <div class="upgrade-label">Стоимость апгрейда</div>
+                    <div class="upgrade-value"><span id="upgradeCost">100</span></div>
+                </div>
+            </div>
+        </div>
+        
         <div class="actions-container">
             <button id="processOrderBtn">Обработать заказ</button>
+            <button id="upgradeBtn" class="upgrade-btn">Апгрейд склада</button>
         </div>
         
         <!-- Сообщение об отсутствии заказа -->
