@@ -19,19 +19,24 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - In-game shop with purchasable items
 - Modal window interface for the shop
 - Purchase confirmation messages
+- Virtual currency (coins) system
+- Coin rewards for passing obstacles
+- Persistent coins between game sessions
 
 ## How to Play
 
 1. Open `index.html` in a web browser
 2. Press the Space bar, Up arrow key, or tap the screen (on mobile devices) to make the character jump
 3. Avoid the red obstacles by jumping over them
-4. Try to achieve the highest score possible
-5. When you hit an obstacle, the game ends
-6. Restart the game by:
+4. Earn coins by successfully jumping over obstacles
+5. Try to achieve the highest score possible
+6. When you hit an obstacle, the game ends
+7. Restart the game by:
    - Clicking the "Restart Game" button
    - Pressing Enter key
    - Tapping the restart button (on mobile devices)
-7. Access the in-game shop by clicking the "Shop" button in the top-right corner
+8. Access the in-game shop by clicking the "Shop" button in the top-right corner
+9. Use your earned coins to purchase items in the shop
 
 ## Controls
 
@@ -49,6 +54,8 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - Score increases automatically as you run
 - Distance is tracked in meters
 - The game counts how many obstacles you successfully pass
+- Each passed obstacle rewards the player with coins
+- Coins are persistent between game sessions
 - Game ends when the player collides with an obstacle
 - High score is saved during the session
 
@@ -57,12 +64,21 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 The game includes a basic in-game shop with the following features:
 - Shop button in the top-right corner
 - Modal window interface
+- Display of player's current coin balance
 - Three sample purchasable items:
   - Coin Pack
   - Character Skin
   - Speed Booster
 - Purchase confirmation messages
 - Multiple ways to close the shop (button, escape key, click outside)
+
+## Currency System
+
+- Earn coins by successfully jumping over obstacles
+- Current coin balance is displayed in the top-left corner
+- Coins are persistent between game sessions (not reset on game over)
+- Total coins are displayed on the game over screen
+- Coins can be used to purchase items in the shop
 
 ## Development
 

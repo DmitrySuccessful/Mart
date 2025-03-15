@@ -48,6 +48,8 @@ let highScore = 0;
 let distance = 0; // Track distance in meters
 let obstaclesPassed = 0; // Count obstacles passed
 let shopOpen = false; // Track if shop is open
+let playerCoins = 0; // Player's virtual currency
+const coinsPerObstacle = 5; // Coins earned per obstacle passed
 
 // Shop button
 const shopButton = {
@@ -351,6 +353,17 @@ function showPurchaseMessage(itemName) {
     };
 }
 
+// Show coin earned message
+let coinMessage = null;
+
+function showCoinMessage(amount) {
+    coinMessage = {
+        text: `+${amount} монет!`,
+        timer: 60, // Show for 1 second
+        y: 150 // Starting Y position
+    };
+}
+
 // Jump function
 function jump() {
     player.velocityY = jumpForce;
@@ -408,6 +421,7 @@ function restartGame() {
     player.y = groundLevel;
     player.velocityY = 0;
     player.isJumping = false;
+    // Note: playerCoins is not reset here, so coins accumulate across games
 }
 
 // Update game state
@@ -417,6 +431,15 @@ function update() {
         purchaseMessage.timer--;
         if (purchaseMessage.timer <= 0) {
             purchaseMessage = null;
+        }
+    }
+    
+    // Update coin message timer
+    if (coinMessage) {
+        coinMessage.timer--;
+        coinMessage.y -= 1; // Move message upward
+        if (coinMessage.timer <= 0) {
+            coinMessage = null;
         }
     }
     
@@ -456,6 +479,10 @@ function update() {
         if (!obstacle.passed && player.x > obstacle.x + obstacle.width) {
             obstacle.passed = true;
             obstaclesPassed++;
+            
+            // Award coins for passing obstacle
+            playerCoins += coinsPerObstacle;
+            showCoinMessage(coinsPerObstacle);
         }
         
         // Check for collision with player
@@ -497,6 +524,11 @@ function draw() {
     ctx.fillText(`Distance: ${Math.floor(distance)}m`, 20, 90);
     ctx.fillText(`Obstacles Passed: ${obstaclesPassed}`, 20, 120);
     
+    // Draw coins with coin icon
+    ctx.fillStyle = '#f1c40f'; // Gold color for coins
+    ctx.font = 'bold 20px Arial';
+    ctx.fillText(`🪙 ${playerCoins}`, 20, 150);
+    
     // Draw shop button
     ctx.fillStyle = shopButton.isHovered ? shopButton.hoverColor : shopButton.color;
     ctx.fillRect(shopButton.x, shopButton.y, shopButton.width, shopButton.height);
@@ -525,6 +557,15 @@ function draw() {
         ctx.textAlign = 'left';
     }
     
+    // Draw coin message if active
+    if (coinMessage) {
+        ctx.fillStyle = '#f1c40f'; // Gold color
+        ctx.font = 'bold 20px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(coinMessage.text, player.x + player.width / 2, coinMessage.y);
+        ctx.textAlign = 'left';
+    }
+    
     // Draw game over message
     if (!gameRunning && !shopOpen) {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
@@ -533,13 +574,18 @@ function draw() {
         ctx.fillStyle = '#fff';
         ctx.font = '40px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 80);
+        ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 100);
         
         ctx.font = '25px Arial';
-        ctx.fillText(`Score: ${Math.floor(score)}`, canvas.width / 2, canvas.height / 2 - 40);
-        ctx.fillText(`High Score: ${Math.floor(highScore)}`, canvas.width / 2, canvas.height / 2 - 10);
-        ctx.fillText(`Distance: ${Math.floor(distance)}m`, canvas.width / 2, canvas.height / 2 + 20);
-        ctx.fillText(`Obstacles Passed: ${obstaclesPassed}`, canvas.width / 2, canvas.height / 2 + 50);
+        ctx.fillText(`Score: ${Math.floor(score)}`, canvas.width / 2, canvas.height / 2 - 60);
+        ctx.fillText(`High Score: ${Math.floor(highScore)}`, canvas.width / 2, canvas.height / 2 - 30);
+        ctx.fillText(`Distance: ${Math.floor(distance)}m`, canvas.width / 2, canvas.height / 2);
+        ctx.fillText(`Obstacles Passed: ${obstaclesPassed}`, canvas.width / 2, canvas.height / 2 + 30);
+        
+        // Draw coins earned
+        ctx.fillStyle = '#f1c40f'; // Gold color for coins
+        ctx.fillText(`🪙 Coins: ${playerCoins}`, canvas.width / 2, canvas.height / 2 + 60);
+        ctx.fillStyle = '#fff';
         
         // Draw restart button
         ctx.fillStyle = restartButton.isHovered ? restartButton.hoverColor : restartButton.color;
@@ -572,6 +618,11 @@ function draw() {
         ctx.font = 'bold 22px Arial';
         ctx.textAlign = 'center';
         ctx.fillText(shopModal.titleText, shopModal.x + shopModal.width / 2, shopModal.y + 40);
+        
+        // Draw player coins in shop
+        ctx.fillStyle = '#f1c40f'; // Gold color for coins
+        ctx.font = 'bold 18px Arial';
+        ctx.fillText(`Ваши монеты: 🪙 ${playerCoins}`, shopModal.x + shopModal.width / 2, shopModal.y + 70);
         
         // Draw close button
         ctx.fillStyle = shopModal.closeButton.isHovered ? shopModal.closeButton.hoverColor : shopModal.closeButton.color;
