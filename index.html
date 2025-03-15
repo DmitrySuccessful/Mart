@@ -3,41 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Runner Game</title>
+    <title>Snake 3D</title>
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
         }
         canvas {
-            border: 2px solid #000;
-            background-color: #fff;
+            display: block;
+        }
+        #scoreContainer {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 100;
+        }
+        #gameControls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 100;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <script>
-        // Wait for DOM to be fully loaded before loading the game
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM fully loaded, loading game.js");
-            
-            // Create and append the script element
-            const script = document.createElement('script');
-            script.src = 'src/js/game.js';
-            script.onload = function() {
-                console.log("Game.js loaded successfully");
-            };
-            script.onerror = function() {
-                console.error("Failed to load game.js. Check the file path.");
-            };
-            document.body.appendChild(script);
-        });
-    </script>
+    <!-- Score display -->
+    <div id="scoreContainer">
+        Score: <span id="score">0</span>
+    </div>
+    
+    <!-- Game controls info -->
+    <div id="gameControls">
+        Use Arrow Keys or WASD to control the snake
+    </div>
+    
+    <!-- Import Three.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <!-- Import our game script -->
+    <script src="src/js/snake3d.js"></script>
 </body>
 </html> 
