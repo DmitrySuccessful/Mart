@@ -6,6 +6,7 @@ let scene, camera, renderer;
 let gamefield;
 let snakeSegments = []; // Array to store snake segments
 let food; // Food object
+let foodHelper; // Helper to visualize food position
 // Game state
 let direction = { x: 1, z: 0 }; // Initial direction: moving along positive x-axis
 let speed = 5; // Snake movement speed (grid units per second)
@@ -59,6 +60,9 @@ function init() {
     
     // Start the animation loop
     animate();
+    
+    // Debug info
+    console.log("Game initialized");
 }
 
 // Reset game state
@@ -188,6 +192,8 @@ function createSnake() {
         scene.add(segment);
         snakeSegments.push(segment);
     }
+    
+    console.log("Snake created with", snakeSegments.length, "segments");
 }
 
 // Add a new segment to the snake
@@ -240,13 +246,18 @@ function createFood() {
         scene.remove(food);
     }
     
+    // Remove existing food helper if any
+    if (foodHelper) {
+        scene.remove(foodHelper);
+    }
+    
     // Create food geometry and material
-    const foodGeometry = new THREE.SphereGeometry(0.5, 16, 16); // Smaller than snake segments
-    const foodMaterial = new THREE.MeshPhongMaterial({ 
-        color: 0xff0000,  // Red color for food
-        specular: 0xffffff,
-        shininess: 50,
-        emissive: 0x550000 // Slight glow effect
+    // Using a larger size and brighter color for better visibility
+    const foodGeometry = new THREE.SphereGeometry(0.7, 16, 16); // Larger than before
+    const foodMaterial = new THREE.MeshBasicMaterial({ 
+        color: 0xff3333,  // Brighter red color for food
+        emissive: 0xff0000, // Add emissive for glow effect
+        emissiveIntensity: 0.5
     });
     
     food = new THREE.Mesh(foodGeometry, foodMaterial);
@@ -254,7 +265,14 @@ function createFood() {
     // Position food randomly on the grid
     placeRandomFood();
     
+    // Add food to scene
     scene.add(food);
+    
+    // Add a box helper to visualize food position
+    foodHelper = new THREE.BoxHelper(food, 0xffff00);
+    scene.add(foodHelper);
+    
+    console.log("Food created at position:", food.position);
 }
 
 // Place food at a random position on the grid
@@ -277,8 +295,9 @@ function placeRandomFood() {
         return;
     }
     
-    // Set food position (y = 0.5 to place it on top of the field)
-    food.position.set(x, 0.5, z);
+    // Set food position (y = 1.0 to place it higher above the field for better visibility)
+    food.position.set(x, 1.0, z);
+    console.log("Food placed at:", x, 1.0, z);
 }
 
 // Animate food (bobbing up and down, rotating)
@@ -288,11 +307,16 @@ function animateFood(deltaTime) {
     // Update animation phase
     foodAnimationPhase += deltaTime * 0.002;
     
-    // Bob up and down
-    food.position.y = 0.5 + Math.sin(foodAnimationPhase) * 0.2;
+    // Bob up and down (with a higher base position)
+    food.position.y = 1.0 + Math.sin(foodAnimationPhase) * 0.3;
     
     // Rotate
     food.rotation.y += deltaTime * 0.003;
+    
+    // Update the helper position
+    if (foodHelper) {
+        foodHelper.update();
+    }
 }
 
 // Check if the snake has eaten food
@@ -308,6 +332,8 @@ function checkFoodCollision() {
     
     // If the distance is less than the threshold, the snake has eaten the food
     if (distance < distanceThreshold) {
+        console.log("Food eaten! Distance:", distance);
+        
         // Add a new segment to the snake
         addSnakeSegment();
         
@@ -606,6 +632,17 @@ function addLighting() {
     const pointLight = new THREE.PointLight(0xffffff, 0.5, 20);
     pointLight.position.set(0, 5, 0);
     scene.add(pointLight);
+    
+    // Add a spotlight to highlight the food
+    const spotLight = new THREE.SpotLight(0xffffff, 1);
+    spotLight.position.set(0, 10, 0);
+    spotLight.angle = Math.PI / 4;
+    spotLight.penumbra = 0.1;
+    spotLight.decay = 2;
+    spotLight.distance = 200;
+    scene.add(spotLight);
+    
+    console.log("Lighting added to scene");
 }
 
 // Handle window resize
