@@ -16,6 +16,9 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - Detailed distance and obstacles counter
 - Interactive restart button with hover effects
 - Multiple ways to restart the game (keyboard, touch, mouse)
+- In-game shop with purchasable items
+- Modal window interface for the shop
+- Purchase confirmation messages
 
 ## How to Play
 
@@ -28,11 +31,15 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
    - Clicking the "Restart Game" button
    - Pressing Enter key
    - Tapping the restart button (on mobile devices)
+7. Access the in-game shop by clicking the "Shop" button in the top-right corner
 
 ## Controls
 
 - **Space / Up Arrow / Touch**: Jump
 - **Enter / Click Restart Button / Touch Restart Button**: Restart game after game over
+- **Shop Button**: Open in-game shop
+- **Escape**: Close shop
+- **Click outside shop window**: Close shop
 
 ## Game Mechanics
 
@@ -44,6 +51,18 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - The game counts how many obstacles you successfully pass
 - Game ends when the player collides with an obstacle
 - High score is saved during the session
+
+## Shop System
+
+The game includes a basic in-game shop with the following features:
+- Shop button in the top-right corner
+- Modal window interface
+- Three sample purchasable items:
+  - Coin Pack
+  - Character Skin
+  - Speed Booster
+- Purchase confirmation messages
+- Multiple ways to close the shop (button, escape key, click outside)
 
 ## Development
 

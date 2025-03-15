@@ -47,6 +47,114 @@ let score = 0;
 let highScore = 0;
 let distance = 0; // Track distance in meters
 let obstaclesPassed = 0; // Count obstacles passed
+let shopOpen = false; // Track if shop is open
+
+// Shop button
+const shopButton = {
+    x: canvas.width - 110,
+    y: 20,
+    width: 90,
+    height: 40,
+    text: 'Shop',
+    color: '#9b59b6',
+    hoverColor: '#8e44ad',
+    textColor: '#fff',
+    isHovered: false
+};
+
+// Shop modal
+const shopModal = {
+    x: canvas.width / 2 - 200,
+    y: canvas.height / 2 - 200,
+    width: 400,
+    height: 400,
+    color: '#f8f9fa',
+    borderColor: '#6c757d',
+    titleColor: '#343a40',
+    titleText: 'Магазин внутриигровых покупок',
+    closeButton: {
+        x: 0, // Will be calculated
+        y: 0, // Will be calculated
+        width: 80,
+        height: 40,
+        text: 'Закрыть',
+        color: '#dc3545',
+        hoverColor: '#c82333',
+        textColor: '#fff',
+        isHovered: false
+    }
+};
+
+// Shop items
+const shopItems = [
+    {
+        name: 'Пакет монет',
+        description: '1000 монет для покупок',
+        price: '100 руб.',
+        color: '#ffc107',
+        button: {
+            text: 'Купить',
+            color: '#28a745',
+            hoverColor: '#218838',
+            textColor: '#fff',
+            isHovered: false
+        }
+    },
+    {
+        name: 'Скин персонажа',
+        description: 'Уникальный внешний вид',
+        price: '200 руб.',
+        color: '#17a2b8',
+        button: {
+            text: 'Купить',
+            color: '#28a745',
+            hoverColor: '#218838',
+            textColor: '#fff',
+            isHovered: false
+        }
+    },
+    {
+        name: 'Бустер скорости',
+        description: 'Увеличивает скорость на 50%',
+        price: '150 руб.',
+        color: '#fd7e14',
+        button: {
+            text: 'Купить',
+            color: '#28a745',
+            hoverColor: '#218838',
+            textColor: '#fff',
+            isHovered: false
+        }
+    }
+];
+
+// Calculate positions for shop modal elements
+function calculateShopPositions() {
+    // Position close button in top right of modal
+    shopModal.closeButton.x = shopModal.x + shopModal.width - shopModal.closeButton.width - 10;
+    shopModal.closeButton.y = shopModal.y + 10;
+    
+    // Calculate positions for shop items and their buttons
+    const itemHeight = 80;
+    const itemPadding = 20;
+    const startY = shopModal.y + 70; // Start after title
+    
+    shopItems.forEach((item, index) => {
+        item.x = shopModal.x + 20;
+        item.y = startY + (itemHeight + itemPadding) * index;
+        item.width = shopModal.width - 40;
+        item.height = itemHeight;
+        
+        // Position buy button
+        item.button.width = 80;
+        item.button.height = 30;
+        item.button.x = item.x + item.width - item.button.width - 10;
+        item.button.y = item.y + (item.height - item.button.height) / 2;
+    });
+}
+
+// Calculate initial positions
+calculateShopPositions();
 
 // Restart button
 const restartButton = {
@@ -64,13 +172,18 @@ const restartButton = {
 // Handle keyboard input
 document.addEventListener('keydown', function(event) {
     // Space bar or up arrow for jump
-    if ((event.code === 'Space' || event.code === 'ArrowUp') && !player.isJumping && gameRunning) {
+    if ((event.code === 'Space' || event.code === 'ArrowUp') && !player.isJumping && gameRunning && !shopOpen) {
         jump();
     }
     
     // Restart game with Enter key when game over
-    if (event.code === 'Enter' && !gameRunning) {
+    if (event.code === 'Enter' && !gameRunning && !shopOpen) {
         restartGame();
+    }
+    
+    // Close shop with Escape key
+    if (event.code === 'Escape' && shopOpen) {
+        shopOpen = false;
     }
 });
 
@@ -83,7 +196,9 @@ canvas.addEventListener('touchstart', function(event) {
     const touchX = touch.clientX - canvas.getBoundingClientRect().left;
     const touchY = touch.clientY - canvas.getBoundingClientRect().top;
     
-    if (!gameRunning) {
+    if (shopOpen) {
+        handleShopTouch(touchX, touchY);
+    } else if (!gameRunning) {
         // Check if restart button was touched
         if (
             touchX >= restartButton.x && 
@@ -93,18 +208,46 @@ canvas.addEventListener('touchstart', function(event) {
         ) {
             restartGame();
         }
-    } else if (!player.isJumping) {
-        jump();
+    } else {
+        // Check if shop button was touched
+        if (
+            touchX >= shopButton.x && 
+            touchX <= shopButton.x + shopButton.width &&
+            touchY >= shopButton.y && 
+            touchY <= shopButton.y + shopButton.height
+        ) {
+            shopOpen = true;
+        } else if (!player.isJumping) {
+            jump();
+        }
     }
 });
 
-// Handle mouse movement for button hover effect
+// Handle mouse movement for button hover effects
 canvas.addEventListener('mousemove', function(event) {
-    if (!gameRunning) {
-        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+    const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+    const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+    
+    if (shopOpen) {
+        // Check hover for shop close button
+        shopModal.closeButton.isHovered = (
+            mouseX >= shopModal.closeButton.x && 
+            mouseX <= shopModal.closeButton.x + shopModal.closeButton.width &&
+            mouseY >= shopModal.closeButton.y && 
+            mouseY <= shopModal.closeButton.y + shopModal.closeButton.height
+        );
         
-        // Check if mouse is over restart button
+        // Check hover for shop item buttons
+        shopItems.forEach(item => {
+            item.button.isHovered = (
+                mouseX >= item.button.x && 
+                mouseX <= item.button.x + item.button.width &&
+                mouseY >= item.button.y && 
+                mouseY <= item.button.y + item.button.height
+            );
+        });
+    } else if (!gameRunning) {
+        // Check hover for restart button
         restartButton.isHovered = (
             mouseX >= restartButton.x && 
             mouseX <= restartButton.x + restartButton.width &&
@@ -112,14 +255,24 @@ canvas.addEventListener('mousemove', function(event) {
             mouseY <= restartButton.y + restartButton.height
         );
     }
+    
+    // Always check hover for shop button
+    shopButton.isHovered = (
+        mouseX >= shopButton.x && 
+        mouseX <= shopButton.x + shopButton.width &&
+        mouseY >= shopButton.y && 
+        mouseY <= shopButton.y + shopButton.height
+    );
 });
 
-// Handle mouse click for restart button
+// Handle mouse click
 canvas.addEventListener('click', function(event) {
-    if (!gameRunning) {
-        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
-        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
-        
+    const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+    const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+    
+    if (shopOpen) {
+        handleShopClick(mouseX, mouseY);
+    } else if (!gameRunning) {
         // Check if restart button was clicked
         if (
             mouseX >= restartButton.x && 
@@ -130,7 +283,73 @@ canvas.addEventListener('click', function(event) {
             restartGame();
         }
     }
+    
+    // Always check for shop button click
+    if (
+        mouseX >= shopButton.x && 
+        mouseX <= shopButton.x + shopButton.width &&
+        mouseY >= shopButton.y && 
+        mouseY <= shopButton.y + shopButton.height
+    ) {
+        shopOpen = true;
+    }
 });
+
+// Handle shop click
+function handleShopClick(x, y) {
+    // Check if close button was clicked
+    if (
+        x >= shopModal.closeButton.x && 
+        x <= shopModal.closeButton.x + shopModal.closeButton.width &&
+        y >= shopModal.closeButton.y && 
+        y <= shopModal.closeButton.y + shopModal.closeButton.height
+    ) {
+        shopOpen = false;
+        return;
+    }
+    
+    // Check if clicked outside modal (to close)
+    if (
+        x < shopModal.x || 
+        x > shopModal.x + shopModal.width ||
+        y < shopModal.y || 
+        y > shopModal.y + shopModal.height
+    ) {
+        shopOpen = false;
+        return;
+    }
+    
+    // Check if any buy button was clicked
+    shopItems.forEach(item => {
+        if (
+            x >= item.button.x && 
+            x <= item.button.x + item.button.width &&
+            y >= item.button.y && 
+            y <= item.button.y + item.button.height
+        ) {
+            console.log(`Покупка совершена: ${item.name} за ${item.price}`);
+            // Show purchase message on screen
+            showPurchaseMessage(item.name);
+        }
+    });
+}
+
+// Handle shop touch
+function handleShopTouch(x, y) {
+    // Same logic as handleShopClick
+    handleShopClick(x, y);
+}
+
+// Show purchase message
+let purchaseMessage = null;
+let purchaseMessageTimer = 0;
+
+function showPurchaseMessage(itemName) {
+    purchaseMessage = {
+        text: `Покупка совершена: ${itemName}`,
+        timer: 120 // Show for 2 seconds (60 frames per second)
+    };
+}
 
 // Jump function
 function jump() {
@@ -193,7 +412,15 @@ function restartGame() {
 
 // Update game state
 function update() {
-    if (!gameRunning) return;
+    // Update purchase message timer
+    if (purchaseMessage) {
+        purchaseMessage.timer--;
+        if (purchaseMessage.timer <= 0) {
+            purchaseMessage = null;
+        }
+    }
+    
+    if (!gameRunning || shopOpen) return;
 
     // Apply gravity to player
     player.velocityY += gravity;
@@ -270,8 +497,36 @@ function draw() {
     ctx.fillText(`Distance: ${Math.floor(distance)}m`, 20, 90);
     ctx.fillText(`Obstacles Passed: ${obstaclesPassed}`, 20, 120);
     
+    // Draw shop button
+    ctx.fillStyle = shopButton.isHovered ? shopButton.hoverColor : shopButton.color;
+    ctx.fillRect(shopButton.x, shopButton.y, shopButton.width, shopButton.height);
+    ctx.fillStyle = shopButton.textColor;
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(shopButton.text, shopButton.x + shopButton.width / 2, shopButton.y + shopButton.height / 2 + 7);
+    ctx.textAlign = 'left';
+    
+    // Draw purchase message if active
+    if (purchaseMessage) {
+        ctx.fillStyle = 'rgba(40, 167, 69, 0.9)'; // Green background
+        const msgWidth = 300;
+        const msgHeight = 50;
+        const msgX = (canvas.width - msgWidth) / 2;
+        const msgY = 150;
+        
+        // Draw message box
+        ctx.fillRect(msgX, msgY, msgWidth, msgHeight);
+        
+        // Draw message text
+        ctx.fillStyle = '#fff';
+        ctx.font = '18px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(purchaseMessage.text, canvas.width / 2, msgY + msgHeight / 2 + 6);
+        ctx.textAlign = 'left';
+    }
+    
     // Draw game over message
-    if (!gameRunning) {
+    if (!gameRunning && !shopOpen) {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
@@ -295,6 +550,81 @@ function draw() {
         ctx.fillText(restartButton.text, canvas.width / 2, restartButton.y + 33);
         
         ctx.textAlign = 'left';
+    }
+    
+    // Draw shop modal
+    if (shopOpen) {
+        // Draw semi-transparent overlay
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Draw modal background
+        ctx.fillStyle = shopModal.color;
+        ctx.fillRect(shopModal.x, shopModal.y, shopModal.width, shopModal.height);
+        
+        // Draw modal border
+        ctx.strokeStyle = shopModal.borderColor;
+        ctx.lineWidth = 2;
+        ctx.strokeRect(shopModal.x, shopModal.y, shopModal.width, shopModal.height);
+        
+        // Draw modal title
+        ctx.fillStyle = shopModal.titleColor;
+        ctx.font = 'bold 22px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(shopModal.titleText, shopModal.x + shopModal.width / 2, shopModal.y + 40);
+        
+        // Draw close button
+        ctx.fillStyle = shopModal.closeButton.isHovered ? shopModal.closeButton.hoverColor : shopModal.closeButton.color;
+        ctx.fillRect(
+            shopModal.closeButton.x, 
+            shopModal.closeButton.y, 
+            shopModal.closeButton.width, 
+            shopModal.closeButton.height
+        );
+        
+        ctx.fillStyle = shopModal.closeButton.textColor;
+        ctx.font = '16px Arial';
+        ctx.fillText(
+            shopModal.closeButton.text, 
+            shopModal.closeButton.x + shopModal.closeButton.width / 2 - 25, 
+            shopModal.closeButton.y + shopModal.closeButton.height / 2 + 5
+        );
+        
+        // Draw shop items
+        ctx.textAlign = 'left';
+        shopItems.forEach((item, index) => {
+            // Draw item background
+            ctx.fillStyle = item.color;
+            ctx.fillRect(item.x, item.y, item.width, item.height);
+            
+            // Draw item text
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 18px Arial';
+            ctx.fillText(item.name, item.x + 10, item.y + 25);
+            
+            ctx.font = '14px Arial';
+            ctx.fillText(item.description, item.x + 10, item.y + 50);
+            ctx.fillText(item.price, item.x + 10, item.y + 70);
+            
+            // Draw buy button
+            ctx.fillStyle = item.button.isHovered ? item.button.hoverColor : item.button.color;
+            ctx.fillRect(
+                item.button.x, 
+                item.button.y, 
+                item.button.width, 
+                item.button.height
+            );
+            
+            ctx.fillStyle = item.button.textColor;
+            ctx.font = '16px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(
+                item.button.text, 
+                item.button.x + item.button.width / 2, 
+                item.button.y + item.button.height / 2 + 5
+            );
+            ctx.textAlign = 'left';
+        });
     }
 }
 
