@@ -18,6 +18,7 @@ body {
     width: 100%;
     max-width: 500px;
     text-align: center;
+    position: relative;
 }
 
 .game-title {
@@ -77,4 +78,97 @@ button:hover {
 
 button:active {
     transform: scale(0.98);
+}
+
+/* Стили для системы заказов */
+.order-container {
+    background-color: #f0f8ff;
+    border: 1px solid #b0e0e6;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 20px 0;
+    position: relative;
+}
+
+.order-title {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.order-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #2196F3;
+}
+
+.order-progress {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.order-progress-bar {
+    height: 100%;
+    background-color: #2196F3;
+    width: 100%;
+    transition: width 0.1s linear;
+}
+
+/* Стили для уведомлений */
+.notification {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    right: 0;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+}
+
+.notification-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.message {
+    margin-top: 10px;
+    color: #f44336;
+    font-size: 14px;
+    height: 20px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.message-active {
+    opacity: 1;
+}
+
+/* Анимация получения денег */
+.money-animation {
+    position: absolute;
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 20px;
+    animation: float-up 1s ease-out forwards;
+    pointer-events: none;
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
 } 

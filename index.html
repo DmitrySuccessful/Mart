@@ -8,6 +8,9 @@
 </head>
 <body>
     <div class="game-container">
+        <!-- Уведомление о новом заказе -->
+        <div id="orderNotification" class="notification"></div>
+        
         <h1 class="game-title">Магазин заказов</h1>
         
         <div class="stats-container">
@@ -22,9 +25,21 @@
             </div>
         </div>
         
+        <!-- Контейнер для текущего заказа -->
+        <div id="currentOrderContainer" class="order-container">
+            <div class="order-title">Текущий заказ</div>
+            <div class="order-value"><span id="orderValue">0</span> монет</div>
+            <div class="order-progress">
+                <div id="orderProgressBar" class="order-progress-bar"></div>
+            </div>
+        </div>
+        
         <div class="actions-container">
             <button id="processOrderBtn">Обработать заказ</button>
         </div>
+        
+        <!-- Сообщение об отсутствии заказа -->
+        <div id="orderMessage" class="message"></div>
     </div>
 
     <!-- Подключение JavaScript -->
