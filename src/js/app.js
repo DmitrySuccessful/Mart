@@ -82,6 +82,110 @@ const courses = {
             { id: 5, title: "Публикация приложения", duration: "20 мин", completed: false, locked: true },
             { id: 6, title: "Финальный проект", duration: "45 мин", completed: false, locked: true }
         ]
+    },
+    4: {
+        id: 4,
+        title: "Мастер продаж",
+        description: "Комплексный курс по развитию навыков продаж и маркетинговых стратегий",
+        lessons: [
+            { id: 1, title: "Основы успешных продаж", duration: "20 мин", completed: false, locked: false, content: {
+                type: "text",
+                text: `<h3>Основы успешных продаж</h3>
+                <p>Продажи — это искусство и наука убеждения клиентов в ценности вашего продукта или услуги.</p>
+                <p>Ключевые принципы успешных продаж:</p>
+                <ul>
+                    <li><strong>Понимание клиента</strong> — выявление потребностей и болей клиента</li>
+                    <li><strong>Ценностное предложение</strong> — демонстрация ценности, а не просто характеристик</li>
+                    <li><strong>Активное слушание</strong> — умение слышать клиента и задавать правильные вопросы</li>
+                    <li><strong>Работа с возражениями</strong> — превращение возражений в возможности</li>
+                </ul>
+                <div class="video-container">
+                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/7OoVwAFtZ5o" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="interactive-element">
+                    <h4>Практическое упражнение</h4>
+                    <p>Представьте, что клиент говорит: "Ваш продукт слишком дорогой". Как бы вы ответили?</p>
+                    <div class="role-play">
+                        <button class="role-play-option" onclick="handleRolePlay('price', 1)">Мы предлагаем лучшее качество на рынке</button>
+                        <button class="role-play-option" onclick="handleRolePlay('price', 2)">Могу предложить вам скидку</button>
+                        <button class="role-play-option" onclick="handleRolePlay('price', 3)">Давайте обсудим, какую ценность вы ищете в продукте</button>
+                    </div>
+                    <div id="role-play-feedback" class="role-play-feedback"></div>
+                </div>
+                <div class="checklist">
+                    <h4>Чек-лист для первой встречи с клиентом</h4>
+                    <ul>
+                        <li>Подготовить информацию о клиенте заранее</li>
+                        <li>Определить ключевые вопросы для выявления потребностей</li>
+                        <li>Подготовить презентацию ценности продукта</li>
+                        <li>Продумать ответы на возможные возражения</li>
+                        <li>Подготовить следующие шаги и план действий</li>
+                    </ul>
+                </div>`
+            }},
+            { id: 2, title: "Психология продаж", duration: "25 мин", completed: false, locked: true },
+            { id: 3, title: "Эффективные маркетинговые стратегии", duration: "30 мин", completed: false, locked: true },
+            { id: 4, title: "Клиентский сервис высшего уровня", duration: "25 мин", completed: false, locked: true },
+            { id: 5, title: "Управление воронкой продаж", duration: "30 мин", completed: false, locked: true },
+            { id: 6, title: "Техники закрытия сделок", duration: "20 мин", completed: false, locked: true },
+            { id: 7, title: "Работа с ключевыми клиентами", duration: "25 мин", completed: false, locked: true },
+            { id: 8, title: "Построение долгосрочных отношений", duration: "20 мин", completed: false, locked: true },
+            { id: 9, title: "FAQ и советы экспертов", duration: "15 мин", completed: false, locked: true, content: {
+                type: "text",
+                text: `<h3>FAQ и советы экспертов</h3>
+                <div class="faq-section">
+                    <h4>Часто задаваемые вопросы</h4>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Как справиться с агрессивным клиентом?</div>
+                        <div class="faq-answer">
+                            <p>Сохраняйте спокойствие и не принимайте агрессию на свой счет. Активно слушайте, дайте клиенту высказаться. 
+                            Выразите понимание его чувств и предложите конкретное решение проблемы. Если ситуация не улучшается, 
+                            вежливо предложите продолжить разговор позже или привлеките руководителя.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Как определить реальные потребности клиента?</div>
+                        <div class="faq-answer">
+                            <p>Используйте открытые вопросы (начинающиеся с "что", "как", "почему"). Практикуйте активное слушание, 
+                            обращая внимание не только на слова, но и на интонацию и язык тела. Перефразируйте услышанное, чтобы 
+                            убедиться в правильном понимании. Исследуйте не только текущие потребности, но и долгосрочные цели клиента.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">Как эффективно презентовать цену?</div>
+                        <div class="faq-answer">
+                            <p>Всегда сначала демонстрируйте ценность, а затем называйте цену. Используйте технику "сэндвича": 
+                            ценность - цена - ценность. Говорите о цене уверенно, без извинений. При необходимости разбивайте 
+                            стоимость на составляющие или на периоды (например, стоимость в месяц вместо годовой).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="expert-tips">
+                    <h4>Советы от экспертов отрасли</h4>
+                    
+                    <div class="expert-tip">
+                        <div class="expert-name">Михаил Иванов, директор по продажам компании "ТехноЛидер"</div>
+                        <div class="expert-advice">
+                            "Самая большая ошибка продавцов — говорить больше, чем слушать. Соотношение должно быть 80/20 
+                            в пользу клиента. Задавайте правильные вопросы и внимательно слушайте ответы — там скрыты все 
+                            ключи к успешной продаже."
+                        </div>
+                    </div>
+                    
+                    <div class="expert-tip">
+                        <div class="expert-name">Елена Петрова, бизнес-тренер по продажам</div>
+                        <div class="expert-advice">
+                            "Регулярно анализируйте свои успешные и неуспешные сделки. Ведите дневник продаж, где отмечаете, 
+                            что сработало, а что нет. Такая рефлексия — ключ к постоянному совершенствованию ваших навыков."
+                        </div>
+                    </div>
+                </div>`
+            }}
+        ]
     }
 };
 
@@ -209,6 +313,69 @@ const tests = {
                 correctAnswer: 3
             },
             // Другие вопросы...
+        ]
+    },
+    4: {
+        id: 4,
+        title: "Тест по основам продаж",
+        courseId: 4,
+        lessonId: 1,
+        questions: [
+            {
+                id: 1,
+                text: "Что является ключевым в понимании потребностей клиента?",
+                options: [
+                    "Рассказать о всех характеристиках продукта",
+                    "Активное слушание и задавание открытых вопросов",
+                    "Предложение скидки",
+                    "Демонстрация преимуществ перед конкурентами"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 2,
+                text: "Как лучше всего реагировать на возражение о высокой цене?",
+                options: [
+                    "Сразу предложить скидку",
+                    "Сравнить с более дорогими конкурентами",
+                    "Объяснить ценность продукта в контексте потребностей клиента",
+                    "Сказать, что это рыночная цена"
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 3,
+                text: "Что такое ценностное предложение?",
+                options: [
+                    "Предложение скидки или акции",
+                    "Демонстрация того, как продукт решает проблемы клиента",
+                    "Перечисление всех характеристик продукта",
+                    "Сравнение с конкурентами"
+                ],
+                correctAnswer: 1
+            },
+            {
+                id: 4,
+                text: "Какой подход наиболее эффективен при первой встрече с клиентом?",
+                options: [
+                    "Сразу предложить купить продукт",
+                    "Рассказать о всех достоинствах компании",
+                    "Задавать вопросы и выявлять потребности",
+                    "Предложить специальную цену"
+                ],
+                correctAnswer: 2
+            },
+            {
+                id: 5,
+                text: "Что является признаком успешного завершения продажи?",
+                options: [
+                    "Клиент задает вопросы о деталях сотрудничества",
+                    "Клиент говорит, что подумает",
+                    "Клиент просит скидку",
+                    "Клиент сравнивает с конкурентами"
+                ],
+                correctAnswer: 0
+            }
         ]
     }
 };
@@ -924,6 +1091,11 @@ function startLesson(courseId, lessonId) {
     
     // Показываем секцию урока
     showSection('lesson-view');
+    
+    // Инициализируем FAQ, если они есть в уроке
+    if (lesson.content && lesson.content.text.includes('faq-question')) {
+        initFaqItems();
+    }
 }
 
 // Вернуться к просмотру курса
@@ -1241,5 +1413,71 @@ function applyUserData() {
 function updateAllCoursesProgress() {
     Object.keys(courses).forEach(courseId => {
         updateCourseProgress(parseInt(courseId));
+    });
+}
+
+// Функция для обработки ролевых игр
+function handleRolePlay(scenario, option) {
+    let feedback = '';
+    let isCorrect = false;
+    
+    switch(scenario) {
+        case 'price':
+            if (option === 3) {
+                feedback = '<span class="correct">✓ Отлично!</span> Фокус на ценности — лучший способ работы с возражением о цене. Вы показываете готовность понять потребности клиента и подобрать оптимальное решение.';
+                isCorrect = true;
+            } else if (option === 1) {
+                feedback = '<span class="warning">⚠️ Неплохо</span>, но такой ответ может звучать как заготовка. Лучше выяснить, что именно клиент считает дорогим и почему.';
+            } else {
+                feedback = '<span class="incorrect">✗ Осторожно</span>. Сразу предлагать скидку — значит обесценивать свой продукт. Сначала нужно показать ценность.';
+            }
+            break;
+        // Можно добавить другие сценарии
+    }
+    
+    const feedbackElement = document.getElementById('role-play-feedback');
+    if (feedbackElement) {
+        feedbackElement.innerHTML = feedback;
+        feedbackElement.style.display = 'block';
+        
+        if (isCorrect) {
+            feedbackElement.className = 'role-play-feedback correct-feedback';
+        } else {
+            feedbackElement.className = 'role-play-feedback ' + (option === 1 ? 'warning-feedback' : 'incorrect-feedback');
+        }
+    }
+}
+
+// Функция для инициализации FAQ-вопросов
+function initFaqItems() {
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    
+    faqQuestions.forEach(question => {
+        // Скрываем ответы по умолчанию
+        const answer = question.nextElementSibling;
+        if (answer && answer.classList.contains('faq-answer')) {
+            answer.style.display = 'none';
+        }
+        
+        // Добавляем обработчик клика
+        question.addEventListener('click', function() {
+            const answer = this.nextElementSibling;
+            if (answer && answer.classList.contains('faq-answer')) {
+                // Переключаем видимость ответа
+                if (answer.style.display === 'none' || !answer.style.display) {
+                    answer.style.display = 'block';
+                    this.classList.add('active');
+                    this.setAttribute('aria-expanded', 'true');
+                    // Меняем символ с + на -
+                    this.style.setProperty('--faq-icon', '"-"');
+                } else {
+                    answer.style.display = 'none';
+                    this.classList.remove('active');
+                    this.setAttribute('aria-expanded', 'false');
+                    // Меняем символ с - на +
+                    this.style.setProperty('--faq-icon', '"+"');
+                }
+            }
+        });
     });
 } 

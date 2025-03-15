@@ -979,4 +979,192 @@ footer {
     body.tg-dark-theme .question-feedback.warning {
         background-color: rgba(255, 152, 0, 0.2);
     }
+}
+
+/* Стили для курса "Мастер продаж" */
+.role-play {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
+}
+
+.role-play-option {
+    background-color: #f5f5f5;
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    text-align: left;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.role-play-option:hover {
+    background-color: #e9e9e9;
+}
+
+.role-play-feedback {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    font-size: 0.95rem;
+    display: none;
+}
+
+.correct-feedback {
+    background-color: rgba(76, 175, 80, 0.1);
+    border: 1px solid var(--success-color);
+}
+
+.warning-feedback {
+    background-color: rgba(255, 152, 0, 0.1);
+    border: 1px solid var(--warning-color);
+}
+
+.incorrect-feedback {
+    background-color: rgba(244, 67, 54, 0.1);
+    border: 1px solid var(--error-color);
+}
+
+.role-play-feedback .correct {
+    color: var(--success-color);
+    font-weight: 500;
+}
+
+.role-play-feedback .warning {
+    color: var(--warning-color);
+    font-weight: 500;
+}
+
+.role-play-feedback .incorrect {
+    color: var(--error-color);
+    font-weight: 500;
+}
+
+.checklist {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    border-left: 4px solid var(--primary-color);
+}
+
+.checklist h4 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.checklist ul {
+    margin-left: var(--spacing-md);
+}
+
+.checklist li {
+    margin-bottom: 6px;
+    position: relative;
+}
+
+.checklist li::before {
+    content: "✓";
+    color: var(--primary-color);
+    position: absolute;
+    left: -20px;
+}
+
+/* Стили для FAQ и советов экспертов */
+.faq-section, .expert-tips {
+    margin-bottom: var(--spacing-lg);
+}
+
+.faq-item {
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--medium-gray);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+.faq-question {
+    background-color: #f5f5f5;
+    padding: var(--spacing-md);
+    font-weight: 500;
+    cursor: pointer;
+    position: relative;
+    --faq-icon: "+";
+}
+
+.faq-question::after {
+    content: var(--faq-icon, "+");
+    position: absolute;
+    right: var(--spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+.faq-question.active {
+    background-color: #eaeaea;
+}
+
+.faq-answer {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--medium-gray);
+}
+
+.expert-tip {
+    background-color: #f5f5f5;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.expert-name {
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.expert-advice {
+    font-style: italic;
+    line-height: 1.5;
+}
+
+/* Темная тема для новых элементов */
+@media (prefers-color-scheme: dark) {
+    body.tg-dark-theme .role-play-option {
+        background-color: #424242;
+        border-color: #555;
+    }
+    
+    body.tg-dark-theme .role-play-option:hover {
+        background-color: #505050;
+    }
+    
+    body.tg-dark-theme .checklist,
+    body.tg-dark-theme .faq-question,
+    body.tg-dark-theme .expert-tip {
+        background-color: #333;
+    }
+    
+    body.tg-dark-theme .faq-item {
+        border-color: #444;
+    }
+    
+    body.tg-dark-theme .faq-answer {
+        border-top-color: #444;
+    }
+    
+    body.tg-dark-theme .correct-feedback {
+        background-color: rgba(76, 175, 80, 0.15);
+        border-color: rgba(76, 175, 80, 0.5);
+    }
+    
+    body.tg-dark-theme .warning-feedback {
+        background-color: rgba(255, 152, 0, 0.15);
+        border-color: rgba(255, 152, 0, 0.5);
+    }
+    
+    body.tg-dark-theme .incorrect-feedback {
+        background-color: rgba(244, 67, 54, 0.15);
+        border-color: rgba(244, 67, 54, 0.5);
+    }
 } 
