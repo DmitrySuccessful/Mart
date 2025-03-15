@@ -7,6 +7,39 @@ const gravity = 0.5;
 const jumpForce = -12;
 const groundLevel = canvas.height - 50;
 
+// Проверка поддержки localStorage
+function isLocalStorageAvailable() {
+    try {
+        const test = 'test';
+        localStorage.setItem(test, test);
+        localStorage.removeItem(test);
+        return true;
+    } catch(e) {
+        console.error('localStorage не поддерживается:', e);
+        return false;
+    }
+}
+
+// Функции для работы с localStorage
+function saveGameData() {
+    if (isLocalStorageAvailable()) {
+        localStorage.setItem("playerCoins", playerCoins);
+        localStorage.setItem("highScore", highScore);
+    }
+}
+
+function loadGameData() {
+    if (isLocalStorageAvailable()) {
+        if (localStorage.getItem("playerCoins") !== null) {
+            playerCoins = parseInt(localStorage.getItem("playerCoins"));
+        }
+        
+        if (localStorage.getItem("highScore") !== null) {
+            highScore = parseInt(localStorage.getItem("highScore"));
+        }
+    }
+}
+
 // Player object
 const player = {
     x: 100,
@@ -51,6 +84,9 @@ let shopOpen = false; // Track if shop is open
 let playerCoins = 0; // Player's virtual currency
 const coinsPerObstacle = 5; // Coins earned per obstacle passed
 
+// Загрузка сохраненных данных при инициализации
+loadGameData();
+
 // Shop button
 const shopButton = {
     x: canvas.width - 110,
@@ -60,6 +96,19 @@ const shopButton = {
     text: 'Shop',
     color: '#9b59b6',
     hoverColor: '#8e44ad',
+    textColor: '#fff',
+    isHovered: false
+};
+
+// Reset progress button
+const resetButton = {
+    x: canvas.width - 110,
+    y: 70, // Под кнопкой магазина
+    width: 90,
+    height: 40,
+    text: 'Reset',
+    color: '#e74c3c',
+    hoverColor: '#c0392b',
     textColor: '#fff',
     isHovered: false
 };
@@ -265,6 +314,14 @@ canvas.addEventListener('mousemove', function(event) {
         mouseY >= shopButton.y && 
         mouseY <= shopButton.y + shopButton.height
     );
+    
+    // Always check hover for reset button
+    resetButton.isHovered = (
+        mouseX >= resetButton.x && 
+        mouseX <= resetButton.x + resetButton.width &&
+        mouseY >= resetButton.y && 
+        mouseY <= resetButton.y + resetButton.height
+    );
 });
 
 // Handle mouse click
@@ -295,7 +352,28 @@ canvas.addEventListener('click', function(event) {
     ) {
         shopOpen = true;
     }
+    
+    // Always check for reset button click
+    if (
+        mouseX >= resetButton.x && 
+        mouseX <= resetButton.x + resetButton.width &&
+        mouseY >= resetButton.y && 
+        mouseY <= resetButton.y + resetButton.height
+    ) {
+        resetProgress();
+    }
 });
+
+// Reset progress function
+function resetProgress() {
+    if (confirm('Вы уверены, что хотите сбросить весь прогресс? Это действие нельзя отменить.')) {
+        localStorage.removeItem("playerCoins");
+        localStorage.removeItem("highScore");
+        playerCoins = 0;
+        highScore = 0;
+        showPurchaseMessage("Прогресс сброшен");
+    }
+}
 
 // Handle shop click
 function handleShopClick(x, y) {
@@ -407,6 +485,7 @@ function gameOver() {
     // Update high score if current score is higher
     if (score > highScore) {
         highScore = score;
+        saveGameData(); // Сохраняем новый рекорд
     }
 }
 
@@ -483,6 +562,7 @@ function update() {
             // Award coins for passing obstacle
             playerCoins += coinsPerObstacle;
             showCoinMessage(coinsPerObstacle);
+            saveGameData(); // Сохраняем прогресс после получения монет
         }
         
         // Check for collision with player
@@ -536,6 +616,13 @@ function draw() {
     ctx.font = '20px Arial';
     ctx.textAlign = 'center';
     ctx.fillText(shopButton.text, shopButton.x + shopButton.width / 2, shopButton.y + shopButton.height / 2 + 7);
+    
+    // Draw reset button
+    ctx.fillStyle = resetButton.isHovered ? resetButton.hoverColor : resetButton.color;
+    ctx.fillRect(resetButton.x, resetButton.y, resetButton.width, resetButton.height);
+    ctx.fillStyle = resetButton.textColor;
+    ctx.fillText(resetButton.text, resetButton.x + resetButton.width / 2, resetButton.y + resetButton.height / 2 + 7);
+    
     ctx.textAlign = 'left';
     
     // Draw purchase message if active

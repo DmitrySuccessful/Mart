@@ -22,6 +22,8 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - Virtual currency (coins) system
 - Coin rewards for passing obstacles
 - Persistent coins between game sessions
+- Progress saving with localStorage
+- Reset progress button
 
 ## How to Play
 
@@ -37,12 +39,14 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
    - Tapping the restart button (on mobile devices)
 8. Access the in-game shop by clicking the "Shop" button in the top-right corner
 9. Use your earned coins to purchase items in the shop
+10. Your progress (coins and high score) is automatically saved
 
 ## Controls
 
 - **Space / Up Arrow / Touch**: Jump
 - **Enter / Click Restart Button / Touch Restart Button**: Restart game after game over
 - **Shop Button**: Open in-game shop
+- **Reset Button**: Reset all progress (coins and high score)
 - **Escape**: Close shop
 - **Click outside shop window**: Close shop
 
@@ -80,12 +84,20 @@ The game includes a basic in-game shop with the following features:
 - Total coins are displayed on the game over screen
 - Coins can be used to purchase items in the shop
 
+## Progress Saving
+
+- Game progress (coins and high score) is automatically saved using localStorage
+- Progress persists even after closing the browser
+- Reset button allows clearing all saved progress
+- Confirmation dialog prevents accidental progress reset
+
 ## Development
 
 The game is built using:
 - HTML5
 - CSS3
 - JavaScript (vanilla)
+- localStorage API for progress saving
 
 ## Structure
 
