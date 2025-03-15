@@ -23,6 +23,14 @@
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 24px;
+    
+    /* Новые переменные для визуальной иерархии */
+    --heading-color: #1a1a1a;
+    --subheading-color: #333;
+    --text-color: #555;
+    --highlight-color: #3498db;
+    --card-hover-transform: translateY(-5px);
+    --card-hover-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 * {
@@ -551,30 +559,29 @@ footer {
 .course-cards {
     display: flex;
     overflow-x: auto;
-    gap: var(--spacing-md);
-    padding: var(--spacing-sm) 0;
-    margin: 0 -var(--spacing-md);
-    padding: 0 var(--spacing-md);
+    gap: 1rem;
+    padding: 0.5rem 0;
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
 }
 
 .course-card {
     flex: 0 0 auto;
-    width: 200px;
+    width: 250px;
     border-radius: var(--border-radius);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.course-card:active {
-    transform: scale(0.98);
+.course-card:hover {
+    transform: var(--card-hover-transform);
+    box-shadow: var(--card-hover-shadow);
 }
 
 .course-image {
-    height: 100px;
-    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
 }
 
 .course-info {
@@ -632,11 +639,17 @@ footer {
     cursor: pointer;
     width: 100%;
     margin-top: var(--spacing-md);
-    transition: background-color 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tg-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .tg-button:active {
-    opacity: 0.9;
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tg-button.primary {
@@ -677,13 +690,17 @@ footer {
     padding: var(--spacing-md) var(--spacing-sm);
     background-color: transparent;
     border: none;
-    color: var(--tg-theme-hint-color);
-    transition: color 0.2s ease;
+    color: var(--dark-gray);
+    transition: color 0.3s ease;
     cursor: pointer;
 }
 
 .nav-button.active {
-    color: var(--tg-theme-button-color);
+    color: var(--highlight-color);
+}
+
+.nav-button:hover {
+    color: var(--highlight-color);
 }
 
 .nav-icon {
@@ -823,6 +840,10 @@ footer {
         --tg-theme-button-color: #64b5f6;
         --tg-theme-button-text-color: #ffffff;
         --secondary-color: #333333;
+        --heading-color: #ffffff;
+        --subheading-color: #e0e0e0;
+        --text-color: #b0b0b0;
+        --highlight-color: #64b5f6;
     }
     
     body.tg-dark-theme .course-item,
@@ -834,7 +855,11 @@ footer {
     }
     
     body.tg-dark-theme .app-navigation {
-        background-color: #212121;
+        background-color: #333 !important;
+    }
+    
+    body.tg-dark-theme .nav-button {
+        color: #e0e0e0 !important;
     }
 }
 
@@ -898,6 +923,14 @@ footer {
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
     margin-top: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interactive-element:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
 .interactive-element h4 {
@@ -1511,4 +1544,257 @@ footer {
     .investment-result h5 {
         color: #4da3ff;
     }
+}
+
+/* Новые стили для улучшенного интерфейса */
+.section-title {
+    color: var(--heading-color);
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--highlight-color);
+}
+
+.section-description {
+    color: var(--text-color);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 800px;
+}
+
+.subsection-title {
+    color: var(--subheading-color);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Улучшенные карточки курсов */
+.course-cards {
+    display: flex;
+    overflow-x: auto;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+}
+
+.course-card {
+    flex: 0 0 auto;
+    width: 250px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: var(--card-hover-transform);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.course-image {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Улучшенные кнопки */
+.tg-button {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tg-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tg-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Улучшенная навигация */
+.navbar {
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--highlight-color);
+}
+
+.navbar-nav .nav-link.active {
+    background-color: var(--highlight-color);
+    color: white;
+}
+
+.dropdown-menu {
+    border-radius: var(--border-radius);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    padding: 0.5rem;
+}
+
+.dropdown-item {
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+    background-color: rgba(52, 152, 219, 0.1);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.75rem;
+    }
+    
+    .subsection-title {
+        font-size: 1.25rem;
+    }
+    
+    .course-card {
+        width: 200px;
+    }
+    
+    .course-image {
+        height: 120px;
+    }
+}
+
+/* Темная тема */
+@media (prefers-color-scheme: dark) {
+    body.tg-dark-theme {
+        --heading-color: #ffffff;
+        --subheading-color: #e0e0e0;
+        --text-color: #b0b0b0;
+        --highlight-color: #64b5f6;
+    }
+    
+    body.tg-dark-theme .navbar {
+        background-color: #333 !important;
+    }
+    
+    body.tg-dark-theme .navbar-nav .nav-link {
+        color: #e0e0e0;
+    }
+    
+    body.tg-dark-theme .navbar-nav .nav-link:hover {
+        background-color: rgba(100, 181, 246, 0.2);
+    }
+    
+    body.tg-dark-theme .navbar-nav .nav-link.active {
+        background-color: var(--highlight-color);
+        color: #212121;
+    }
+    
+    body.tg-dark-theme .dropdown-menu {
+        background-color: #424242;
+    }
+    
+    body.tg-dark-theme .dropdown-item {
+        color: #e0e0e0;
+    }
+    
+    body.tg-dark-theme .dropdown-item:hover {
+        background-color: rgba(100, 181, 246, 0.2);
+    }
+    
+    body.tg-dark-theme .app-navigation {
+        background-color: #333 !important;
+    }
+    
+    body.tg-dark-theme .nav-button {
+        color: #e0e0e0 !important;
+    }
+}
+
+/* Анимации для переходов между страницами */
+.content-section {
+    animation-duration: 0.5s;
+}
+
+/* Стили для нижней навигации */
+.app-navigation .nav-button {
+    color: var(--dark-gray);
+    transition: color 0.3s ease;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+
+.app-navigation .nav-button.active {
+    color: var(--highlight-color);
+}
+
+.app-navigation .nav-button:hover {
+    color: var(--highlight-color);
+}
+
+/* Дополнительные стили для интерактивных элементов */
+.interactive-element {
+    border-radius: var(--border-radius);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.interactive-element:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Стили для выделения ключевых элементов */
+.key-point {
+    font-weight: 600;
+    color: var(--highlight-color);
+}
+
+.highlight-box {
+    background-color: rgba(52, 152, 219, 0.1);
+    border-left: 3px solid var(--highlight-color);
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+/* Стили для кнопок действий */
+.action-button {
+    background-color: var(--highlight-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+.action-button:active {
+    transform: translateY(0);
 } 
