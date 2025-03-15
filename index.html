@@ -3,86 +3,156 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idle Game - Mart</title>
-    <link rel="stylesheet" href="src/css/style.css">
+    <title>Telegram Mini App - Образование</title>
+    <link rel="stylesheet" href="src/css/styles.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-    <div class="game-container">
-        <!-- Уведомление о новом заказе -->
-        <div id="orderNotification" class="notification"></div>
-        
-        <!-- Контейнер для кнопок монетизации -->
-        <div class="monetization-container">
-            <button id="watchAdBtn" class="monetization-btn watch-ad-btn">Посмотреть рекламу</button>
-            <button id="buyPremiumBtn" class="monetization-btn premium-btn">Купить премиум</button>
-        </div>
-        
-        <h1 class="game-title">Магазин заказов <span id="premiumIndicator" class="premium-indicator">PREMIUM</span></h1>
-        
-        <div class="stats-container">
-            <div class="stat-box">
-                <div class="stat-label">Деньги</div>
-                <div class="stat-value" id="moneyDisplay">0</div>
-            </div>
-            
-            <div class="stat-box">
-                <div class="stat-label">Обработано заказов</div>
-                <div class="stat-value" id="orderCountDisplay">0</div>
-            </div>
-        </div>
-        
-        <!-- Контейнер для текущего заказа -->
-        <div id="currentOrderContainer" class="order-container">
-            <div class="order-title">Текущий заказ</div>
-            <div class="order-value"><span id="orderValue">0</span> монет</div>
-            <div class="order-progress">
-                <div id="orderProgressBar" class="order-progress-bar"></div>
-            </div>
-        </div>
-        
-        <!-- Контейнер для информации об апгрейдах -->
-        <div class="upgrade-container">
-            <div class="upgrade-title">Склад и логистика</div>
-            <div class="upgrade-info">
-                <div class="upgrade-stat">
-                    <div class="upgrade-label">Уровень</div>
-                    <div class="upgrade-value" id="upgradeLevel">1</div>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>Образовательная платформа</h1>
+        </header>
+
+        <main class="app-content">
+            <!-- Главная секция -->
+            <section id="home" class="content-section active">
+                <h2>Добро пожаловать!</h2>
+                <p>Выберите курс или тест из меню ниже, чтобы начать обучение.</p>
+                
+                <div class="featured-courses">
+                    <h3>Популярные курсы</h3>
+                    <div class="course-cards">
+                        <div class="course-card" data-course-id="1">
+                            <div class="course-image" style="background-color: #3498db;"></div>
+                            <div class="course-info">
+                                <h4>Основы программирования</h4>
+                                <p>Введение в мир программирования</p>
+                            </div>
+                        </div>
+                        <div class="course-card" data-course-id="2">
+                            <div class="course-image" style="background-color: #2ecc71;"></div>
+                            <div class="course-info">
+                                <h4>Веб-разработка</h4>
+                                <p>HTML, CSS и JavaScript</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="upgrade-stat">
-                    <div class="upgrade-label">Множитель дохода</div>
-                    <div class="upgrade-value">x<span id="incomeMultiplier">1.0</span></div>
+            </section>
+
+            <!-- Секция курсов -->
+            <section id="courses" class="content-section">
+                <h2>Доступные курсы</h2>
+                
+                <div class="course-list">
+                    <div class="course-item" data-course-id="1">
+                        <div class="course-item-header">
+                            <h3>Основы программирования</h3>
+                            <span class="course-progress">0/5 уроков</span>
+                        </div>
+                        <p>Введение в мир программирования для начинающих</p>
+                        <button class="tg-button" onclick="openCourse(1)">Начать курс</button>
+                    </div>
+                    
+                    <div class="course-item" data-course-id="2">
+                        <div class="course-item-header">
+                            <h3>Веб-разработка</h3>
+                            <span class="course-progress">0/8 уроков</span>
+                        </div>
+                        <p>Изучите основы создания веб-сайтов с помощью HTML, CSS и JavaScript</p>
+                        <button class="tg-button" onclick="openCourse(2)">Начать курс</button>
+                    </div>
+                    
+                    <div class="course-item" data-course-id="3">
+                        <div class="course-item-header">
+                            <h3>Мобильная разработка</h3>
+                            <span class="course-progress">0/6 уроков</span>
+                        </div>
+                        <p>Создание приложений для iOS и Android</p>
+                        <button class="tg-button" onclick="openCourse(3)">Начать курс</button>
+                    </div>
                 </div>
-                <div class="upgrade-stat">
-                    <div class="upgrade-label">Стоимость апгрейда</div>
-                    <div class="upgrade-value"><span id="upgradeCost">100</span></div>
+            </section>
+
+            <!-- Секция тестов -->
+            <section id="tests" class="content-section">
+                <h2>Проверьте свои знания</h2>
+                
+                <div class="test-list">
+                    <div class="test-item" data-test-id="1">
+                        <div class="test-item-header">
+                            <h3>Тест по основам программирования</h3>
+                            <span class="test-questions">10 вопросов</span>
+                        </div>
+                        <p>Проверьте свои знания основ программирования</p>
+                        <button class="tg-button" onclick="startTest(1)">Начать тест</button>
+                    </div>
+                    
+                    <div class="test-item" data-test-id="2">
+                        <div class="test-item-header">
+                            <h3>Тест по HTML и CSS</h3>
+                            <span class="test-questions">15 вопросов</span>
+                        </div>
+                        <p>Проверьте свои знания HTML и CSS</p>
+                        <button class="tg-button" onclick="startTest(2)">Начать тест</button>
+                    </div>
+                    
+                    <div class="test-item" data-test-id="3">
+                        <div class="test-item-header">
+                            <h3>Тест по JavaScript</h3>
+                            <span class="test-questions">12 вопросов</span>
+                        </div>
+                        <p>Проверьте свои знания JavaScript</p>
+                        <button class="tg-button" onclick="startTest(3)">Начать тест</button>
+                    </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="actions-container">
-            <button id="processOrderBtn">Обработать заказ</button>
-            <button id="upgradeBtn" class="upgrade-btn">Апгрейд склада</button>
-        </div>
-        
-        <!-- Контейнер для настроек -->
-        <div class="settings-container">
-            <button id="resetProgressBtn" class="reset-btn">Сбросить прогресс</button>
-        </div>
-        
-        <!-- Сообщение об отсутствии заказа -->
-        <div id="orderMessage" class="message"></div>
-    </div>
-    
-    <!-- Оверлей для симуляции рекламы -->
-    <div id="adOverlay" class="ad-overlay">
-        <div class="ad-content">
-            <div class="ad-title">Реклама</div>
-            <div class="ad-timer" id="adTimer">3</div>
-            <div class="ad-message">Пожалуйста, подождите. Вы получите 50 монет после просмотра рекламы.</div>
-        </div>
+            </section>
+
+            <!-- Секция просмотра курса -->
+            <section id="course-view" class="content-section">
+                <div class="course-navigation">
+                    <button class="back-button" onclick="backToCourses()">← Назад к курсам</button>
+                    <h2 id="course-title">Название курса</h2>
+                </div>
+                
+                <div class="lesson-list" id="lesson-container">
+                    <!-- Уроки будут добавлены динамически через JavaScript -->
+                </div>
+            </section>
+
+            <!-- Секция просмотра теста -->
+            <section id="test-view" class="content-section">
+                <div class="test-navigation">
+                    <button class="back-button" onclick="backToTests()">← Назад к тестам</button>
+                    <h2 id="test-title">Название теста</h2>
+                </div>
+                
+                <div class="test-container" id="test-container">
+                    <!-- Вопросы теста будут добавлены динамически через JavaScript -->
+                </div>
+                
+                <div class="test-controls">
+                    <button class="tg-button primary" id="submit-test" onclick="submitTest()">Завершить тест</button>
+                </div>
+            </section>
+        </main>
+
+        <nav class="app-navigation">
+            <button class="nav-button active" data-section="home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Главная</span>
+            </button>
+            <button class="nav-button" data-section="courses">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">Курсы</span>
+            </button>
+            <button class="nav-button" data-section="tests">
+                <span class="nav-icon">✓</span>
+                <span class="nav-label">Тесты</span>
+            </button>
+        </nav>
     </div>
 
-    <!-- Подключение JavaScript -->
-    <script src="src/js/game.js"></script>
+    <script src="src/js/app.js"></script>
 </body>
 </html> 
