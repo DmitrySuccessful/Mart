@@ -1,6 +1,14 @@
 // Get the canvas and its context
 const canvas = document.getElementById('gameCanvas');
+if (!canvas) {
+    console.error('Canvas element not found! Make sure the HTML has loaded before the script runs.');
+    throw new Error('Canvas element not found');
+}
 const ctx = canvas.getContext('2d');
+if (!ctx) {
+    console.error('Could not get 2D context from canvas');
+    throw new Error('Canvas context not available');
+}
 
 // Game settings
 const gravity = 0.5;

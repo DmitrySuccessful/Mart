@@ -22,6 +22,22 @@
 </head>
 <body>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <script src="src/js/game.js"></script>
+    <script>
+        // Wait for DOM to be fully loaded before loading the game
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded, loading game.js");
+            
+            // Create and append the script element
+            const script = document.createElement('script');
+            script.src = 'src/js/game.js';
+            script.onload = function() {
+                console.log("Game.js loaded successfully");
+            };
+            script.onerror = function() {
+                console.error("Failed to load game.js. Check the file path.");
+            };
+            document.body.appendChild(script);
+        });
+    </script>
 </body>
 </html> 
