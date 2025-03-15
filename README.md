@@ -13,7 +13,9 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - Collision detection system
 - Game over state with score tracking
 - High score tracking
-- Restart functionality
+- Detailed distance and obstacles counter
+- Interactive restart button with hover effects
+- Multiple ways to restart the game (keyboard, touch, mouse)
 
 ## How to Play
 
@@ -22,12 +24,15 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 3. Avoid the red obstacles by jumping over them
 4. Try to achieve the highest score possible
 5. When you hit an obstacle, the game ends
-6. Press Enter or tap the screen to restart after game over
+6. Restart the game by:
+   - Clicking the "Restart Game" button
+   - Pressing Enter key
+   - Tapping the restart button (on mobile devices)
 
 ## Controls
 
 - **Space / Up Arrow / Touch**: Jump
-- **Enter / Touch (after game over)**: Restart game
+- **Enter / Click Restart Button / Touch Restart Button**: Restart game after game over
 
 ## Game Mechanics
 
@@ -35,6 +40,8 @@ A simple HTML5 Canvas game where a character automatically runs and can jump ove
 - Red rectangles are obstacles that appear from the right side of the screen
 - The player must jump over obstacles to avoid collisions
 - Score increases automatically as you run
+- Distance is tracked in meters
+- The game counts how many obstacles you successfully pass
 - Game ends when the player collides with an obstacle
 - High score is saved during the session
 

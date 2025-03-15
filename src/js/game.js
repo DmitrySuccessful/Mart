@@ -45,6 +45,21 @@ let nextObstacleDistance = obstacleMinGap; // Distance until next obstacle
 let gameRunning = true;
 let score = 0;
 let highScore = 0;
+let distance = 0; // Track distance in meters
+let obstaclesPassed = 0; // Count obstacles passed
+
+// Restart button
+const restartButton = {
+    x: canvas.width / 2 - 100,
+    y: canvas.height / 2 + 80,
+    width: 200,
+    height: 50,
+    text: 'Restart Game',
+    color: '#3498db',
+    hoverColor: '#2980b9',
+    textColor: '#fff',
+    isHovered: false
+};
 
 // Handle keyboard input
 document.addEventListener('keydown', function(event) {
@@ -62,10 +77,58 @@ document.addEventListener('keydown', function(event) {
 // Handle touch input for mobile devices
 canvas.addEventListener('touchstart', function(event) {
     event.preventDefault();
-    if (!player.isJumping && gameRunning) {
+    
+    // Get touch coordinates
+    const touch = event.touches[0];
+    const touchX = touch.clientX - canvas.getBoundingClientRect().left;
+    const touchY = touch.clientY - canvas.getBoundingClientRect().top;
+    
+    if (!gameRunning) {
+        // Check if restart button was touched
+        if (
+            touchX >= restartButton.x && 
+            touchX <= restartButton.x + restartButton.width &&
+            touchY >= restartButton.y && 
+            touchY <= restartButton.y + restartButton.height
+        ) {
+            restartGame();
+        }
+    } else if (!player.isJumping) {
         jump();
-    } else if (!gameRunning) {
-        restartGame();
+    }
+});
+
+// Handle mouse movement for button hover effect
+canvas.addEventListener('mousemove', function(event) {
+    if (!gameRunning) {
+        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+        
+        // Check if mouse is over restart button
+        restartButton.isHovered = (
+            mouseX >= restartButton.x && 
+            mouseX <= restartButton.x + restartButton.width &&
+            mouseY >= restartButton.y && 
+            mouseY <= restartButton.y + restartButton.height
+        );
+    }
+});
+
+// Handle mouse click for restart button
+canvas.addEventListener('click', function(event) {
+    if (!gameRunning) {
+        const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+        const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+        
+        // Check if restart button was clicked
+        if (
+            mouseX >= restartButton.x && 
+            mouseX <= restartButton.x + restartButton.width &&
+            mouseY >= restartButton.y && 
+            mouseY <= restartButton.y + restartButton.height
+        ) {
+            restartGame();
+        }
     }
 });
 
@@ -85,7 +148,8 @@ function createObstacle() {
         y: groundLevel,
         width: width,
         height: height,
-        color: '#e74c3c'
+        color: '#e74c3c',
+        passed: false
     };
     
     obstacles.push(obstacle);
@@ -118,6 +182,8 @@ function gameOver() {
 function restartGame() {
     gameRunning = true;
     score = 0;
+    distance = 0;
+    obstaclesPassed = 0;
     obstacles = [];
     nextObstacleDistance = obstacleMinGap;
     player.y = groundLevel;
@@ -143,6 +209,9 @@ function update() {
     // Automatically move player forward (for running effect)
     score += player.speed / 10;
     
+    // Update distance (1 unit = 1 meter)
+    distance += obstacleSpeed / 10;
+    
     // Generate obstacles
     nextObstacleDistance -= obstacleSpeed;
     if (nextObstacleDistance <= 0) {
@@ -155,6 +224,12 @@ function update() {
         
         // Move obstacle to the left
         obstacle.x -= obstacleSpeed;
+        
+        // Check if player has passed this obstacle
+        if (!obstacle.passed && player.x > obstacle.x + obstacle.width) {
+            obstacle.passed = true;
+            obstaclesPassed++;
+        }
         
         // Check for collision with player
         if (checkCollision(player, obstacle)) {
@@ -187,13 +262,13 @@ function draw() {
     ctx.fillStyle = player.color;
     ctx.fillRect(player.x, player.y - player.height, player.width, player.height);
 
-    // Draw score
+    // Draw score and stats
     ctx.fillStyle = '#000';
     ctx.font = '20px Arial';
     ctx.fillText(`Score: ${Math.floor(score)}`, 20, 30);
-    
-    // Draw high score
     ctx.fillText(`High Score: ${Math.floor(highScore)}`, 20, 60);
+    ctx.fillText(`Distance: ${Math.floor(distance)}m`, 20, 90);
+    ctx.fillText(`Obstacles Passed: ${obstaclesPassed}`, 20, 120);
     
     // Draw game over message
     if (!gameRunning) {
@@ -203,12 +278,21 @@ function draw() {
         ctx.fillStyle = '#fff';
         ctx.font = '40px Arial';
         ctx.textAlign = 'center';
-        ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 40);
+        ctx.fillText('Game Over', canvas.width / 2, canvas.height / 2 - 80);
         
         ctx.font = '25px Arial';
-        ctx.fillText(`Score: ${Math.floor(score)}`, canvas.width / 2, canvas.height / 2);
-        ctx.fillText(`High Score: ${Math.floor(highScore)}`, canvas.width / 2, canvas.height / 2 + 30);
-        ctx.fillText('Press Enter or Tap to Restart', canvas.width / 2, canvas.height / 2 + 70);
+        ctx.fillText(`Score: ${Math.floor(score)}`, canvas.width / 2, canvas.height / 2 - 40);
+        ctx.fillText(`High Score: ${Math.floor(highScore)}`, canvas.width / 2, canvas.height / 2 - 10);
+        ctx.fillText(`Distance: ${Math.floor(distance)}m`, canvas.width / 2, canvas.height / 2 + 20);
+        ctx.fillText(`Obstacles Passed: ${obstaclesPassed}`, canvas.width / 2, canvas.height / 2 + 50);
+        
+        // Draw restart button
+        ctx.fillStyle = restartButton.isHovered ? restartButton.hoverColor : restartButton.color;
+        ctx.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
+        
+        ctx.fillStyle = restartButton.textColor;
+        ctx.font = '24px Arial';
+        ctx.fillText(restartButton.text, canvas.width / 2, restartButton.y + 33);
         
         ctx.textAlign = 'left';
     }
