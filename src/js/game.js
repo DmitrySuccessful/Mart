@@ -13,8 +13,20 @@ let baseUpgradeCost = 100; // Базовая стоимость апгрейда
 let isWatchingAd = false;
 let hasPremium = false;
 
+// Ключи для localStorage
+const STORAGE_KEYS = {
+    MONEY: 'mart_money',
+    ORDER_COUNT: 'mart_order_count',
+    UPGRADE_LEVEL: 'mart_upgrade_level',
+    HAS_PREMIUM: 'mart_has_premium'
+};
+
 // Инициализация игры
 function initGame() {
+    // Загружаем сохраненный прогресс
+    loadProgress();
+    
+    // Обновляем отображение
     updateDisplay();
     
     // Добавляем обработчик события для кнопки "Обработать заказ"
@@ -29,8 +41,77 @@ function initGame() {
     // Добавляем обработчик события для кнопки "Купить премиум"
     document.getElementById('buyPremiumBtn').addEventListener('click', buyPremium);
     
+    // Добавляем обработчик события для кнопки "Сбросить прогресс"
+    document.getElementById('resetProgressBtn').addEventListener('click', resetProgress);
+    
     // Запускаем систему генерации заказов
     startOrderGeneration();
+}
+
+// Функция сохранения прогресса
+function saveProgress() {
+    try {
+        // Сохраняем основные переменные
+        localStorage.setItem(STORAGE_KEYS.MONEY, money);
+        localStorage.setItem(STORAGE_KEYS.ORDER_COUNT, orderCount);
+        localStorage.setItem(STORAGE_KEYS.UPGRADE_LEVEL, upgradeLevel);
+        localStorage.setItem(STORAGE_KEYS.HAS_PREMIUM, hasPremium);
+        
+        console.log('Прогресс сохранен');
+    } catch (error) {
+        console.error('Ошибка при сохранении прогресса:', error);
+    }
+}
+
+// Функция загрузки прогресса
+function loadProgress() {
+    try {
+        // Проверяем наличие сохраненных данных
+        if (localStorage.getItem(STORAGE_KEYS.MONEY) !== null) {
+            // Загружаем основные переменные
+            money = parseInt(localStorage.getItem(STORAGE_KEYS.MONEY)) || 0;
+            orderCount = parseInt(localStorage.getItem(STORAGE_KEYS.ORDER_COUNT)) || 0;
+            upgradeLevel = parseInt(localStorage.getItem(STORAGE_KEYS.UPGRADE_LEVEL)) || 1;
+            hasPremium = localStorage.getItem(STORAGE_KEYS.HAS_PREMIUM) === 'true';
+            
+            console.log('Прогресс загружен');
+        } else {
+            console.log('Сохраненный прогресс не найден, используются начальные значения');
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке прогресса:', error);
+    }
+}
+
+// Функция сброса прогресса
+function resetProgress() {
+    // Показываем диалог подтверждения
+    if (confirm('Вы уверены, что хотите сбросить весь прогресс? Это действие нельзя отменить.')) {
+        try {
+            // Очищаем localStorage
+            localStorage.removeItem(STORAGE_KEYS.MONEY);
+            localStorage.removeItem(STORAGE_KEYS.ORDER_COUNT);
+            localStorage.removeItem(STORAGE_KEYS.UPGRADE_LEVEL);
+            localStorage.removeItem(STORAGE_KEYS.HAS_PREMIUM);
+            
+            // Сбрасываем переменные к начальным значениям
+            money = 0;
+            orderCount = 0;
+            upgradeLevel = 1;
+            hasPremium = false;
+            
+            // Обновляем интерфейс
+            updateDisplay();
+            updatePremiumStatus();
+            
+            // Показываем сообщение об успешном сбросе
+            showMessage('Прогресс успешно сброшен!');
+            
+            console.log('Прогресс сброшен');
+        } catch (error) {
+            console.error('Ошибка при сбросе прогресса:', error);
+        }
+    }
 }
 
 // Функция запуска системы генерации заказов
@@ -110,6 +191,9 @@ function upgradeWarehouse() {
         // Обновляем интерфейс
         updateDisplay();
         updateUpgradeInfo();
+        
+        // Сохраняем прогресс
+        saveProgress();
     } else {
         // Показываем сообщение о недостатке денег
         showNotEnoughMoneyMessage();
@@ -166,6 +250,9 @@ function completeAdWatching() {
     
     // Обновляем интерфейс
     updateDisplay();
+    
+    // Сохраняем прогресс
+    saveProgress();
 }
 
 // Функция симуляции покупки премиума
@@ -185,6 +272,9 @@ function buyPremium() {
     // Обновляем интерфейс
     updatePremiumStatus();
     updateDisplay();
+    
+    // Сохраняем прогресс
+    saveProgress();
 }
 
 // Функция отображения сообщения о премиуме
@@ -323,6 +413,9 @@ function autoProcessOrder() {
         // Обновляем интерфейс
         updateDisplay();
         updateOrderDisplay();
+        
+        // Сохраняем прогресс
+        saveProgress();
     }
 }
 
@@ -350,6 +443,9 @@ function processOrder() {
         // Обновляем интерфейс
         updateDisplay();
         updateOrderDisplay();
+        
+        // Сохраняем прогресс
+        saveProgress();
     } else {
         // Если нет активного заказа, показываем сообщение
         showNoOrderMessage();
