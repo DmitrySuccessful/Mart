@@ -9,6 +9,10 @@ let orderTimeout = 5000; // 5 секунд на обработку заказа
 let upgradeLevel = 1;
 let baseUpgradeCost = 100; // Базовая стоимость апгрейда
 
+// Переменные для системы монетизации
+let isWatchingAd = false;
+let hasPremium = false;
+
 // Инициализация игры
 function initGame() {
     updateDisplay();
@@ -18,6 +22,12 @@ function initGame() {
     
     // Добавляем обработчик события для кнопки "Апгрейд склада"
     document.getElementById('upgradeBtn').addEventListener('click', upgradeWarehouse);
+    
+    // Добавляем обработчик события для кнопки "Посмотреть рекламу"
+    document.getElementById('watchAdBtn').addEventListener('click', watchAd);
+    
+    // Добавляем обработчик события для кнопки "Купить премиум"
+    document.getElementById('buyPremiumBtn').addEventListener('click', buyPremium);
     
     // Запускаем систему генерации заказов
     startOrderGeneration();
@@ -67,7 +77,14 @@ function generateNewOrder() {
 // Функция получения множителя дохода в зависимости от уровня склада
 function getIncomeMultiplier() {
     // Базовый множитель 1.0 + 0.2 за каждый уровень выше первого
-    return 1.0 + (upgradeLevel - 1) * 0.2;
+    let multiplier = 1.0 + (upgradeLevel - 1) * 0.2;
+    
+    // Если есть премиум, добавляем дополнительный бонус
+    if (hasPremium) {
+        multiplier += 0.5;
+    }
+    
+    return multiplier;
 }
 
 // Функция получения стоимости следующего апгрейда
@@ -97,6 +114,117 @@ function upgradeWarehouse() {
         // Показываем сообщение о недостатке денег
         showNotEnoughMoneyMessage();
     }
+}
+
+// Функция симуляции просмотра рекламы
+function watchAd() {
+    // Проверяем, не смотрит ли пользователь уже рекламу
+    if (isWatchingAd) {
+        return;
+    }
+    
+    // Устанавливаем флаг просмотра рекламы
+    isWatchingAd = true;
+    
+    // Показываем оверлей рекламы
+    const adOverlay = document.getElementById('adOverlay');
+    adOverlay.style.display = 'flex';
+    
+    // Запускаем таймер для симуляции просмотра рекламы
+    let adTimeLeft = 3;
+    const adTimerElement = document.getElementById('adTimer');
+    adTimerElement.textContent = adTimeLeft;
+    
+    // Обновляем таймер каждую секунду
+    const adTimer = setInterval(function() {
+        adTimeLeft--;
+        adTimerElement.textContent = adTimeLeft;
+        
+        // Если время вышло, завершаем просмотр рекламы
+        if (adTimeLeft <= 0) {
+            clearInterval(adTimer);
+            completeAdWatching();
+        }
+    }, 1000);
+}
+
+// Функция завершения просмотра рекламы
+function completeAdWatching() {
+    // Скрываем оверлей рекламы
+    const adOverlay = document.getElementById('adOverlay');
+    adOverlay.style.display = 'none';
+    
+    // Сбрасываем флаг просмотра рекламы
+    isWatchingAd = false;
+    
+    // Добавляем бонус к деньгам
+    const adBonus = 50;
+    money += adBonus;
+    
+    // Показываем анимацию получения денег
+    showMoneyAnimation(adBonus);
+    
+    // Обновляем интерфейс
+    updateDisplay();
+}
+
+// Функция симуляции покупки премиума
+function buyPremium() {
+    // Если уже есть премиум, ничего не делаем
+    if (hasPremium) {
+        showMessage('У вас уже есть премиум!');
+        return;
+    }
+    
+    // Показываем сообщение о недоступности функции
+    showPremiumMessage();
+    
+    // Для демонстрации, активируем премиум
+    hasPremium = true;
+    
+    // Обновляем интерфейс
+    updatePremiumStatus();
+    updateDisplay();
+}
+
+// Функция отображения сообщения о премиуме
+function showPremiumMessage() {
+    const messageElement = document.getElementById('orderMessage');
+    messageElement.textContent = 'Поздравляем! Вы приобрели премиум-статус!';
+    messageElement.classList.add('message-active');
+    messageElement.style.color = '#ff9800';
+    
+    setTimeout(function() {
+        messageElement.classList.remove('message-active');
+        messageElement.style.color = '';
+    }, 3000);
+}
+
+// Функция обновления статуса премиума
+function updatePremiumStatus() {
+    const premiumBtn = document.getElementById('buyPremiumBtn');
+    const premiumIndicator = document.getElementById('premiumIndicator');
+    
+    if (hasPremium) {
+        premiumBtn.disabled = true;
+        premiumBtn.textContent = 'Премиум активирован';
+        premiumIndicator.style.display = 'inline-block';
+    } else {
+        premiumBtn.disabled = false;
+        premiumBtn.textContent = 'Купить премиум';
+        premiumIndicator.style.display = 'none';
+    }
+}
+
+// Функция отображения сообщения
+function showMessage(text) {
+    const messageElement = document.getElementById('orderMessage');
+    messageElement.textContent = text;
+    messageElement.classList.add('message-active');
+    
+    setTimeout(function() {
+        messageElement.classList.remove('message-active');
+    }, 2000);
 }
 
 // Функция отображения анимации апгрейда
@@ -287,6 +415,7 @@ function updateDisplay() {
     document.getElementById('moneyDisplay').textContent = money;
     document.getElementById('orderCountDisplay').textContent = orderCount;
     updateUpgradeInfo();
+    updatePremiumStatus();
 }
 
 // Запускаем игру после загрузки страницы

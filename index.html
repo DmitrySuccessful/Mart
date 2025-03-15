@@ -11,7 +11,13 @@
         <!-- Уведомление о новом заказе -->
         <div id="orderNotification" class="notification"></div>
         
-        <h1 class="game-title">Магазин заказов</h1>
+        <!-- Контейнер для кнопок монетизации -->
+        <div class="monetization-container">
+            <button id="watchAdBtn" class="monetization-btn watch-ad-btn">Посмотреть рекламу</button>
+            <button id="buyPremiumBtn" class="monetization-btn premium-btn">Купить премиум</button>
+        </div>
+        
+        <h1 class="game-title">Магазин заказов <span id="premiumIndicator" class="premium-indicator">PREMIUM</span></h1>
         
         <div class="stats-container">
             <div class="stat-box">
@@ -60,6 +66,15 @@
         
         <!-- Сообщение об отсутствии заказа -->
         <div id="orderMessage" class="message"></div>
+    </div>
+    
+    <!-- Оверлей для симуляции рекламы -->
+    <div id="adOverlay" class="ad-overlay">
+        <div class="ad-content">
+            <div class="ad-title">Реклама</div>
+            <div class="ad-timer" id="adTimer">3</div>
+            <div class="ad-message">Пожалуйста, подождите. Вы получите 50 монет после просмотра рекламы.</div>
+        </div>
     </div>
 
     <!-- Подключение JavaScript -->
